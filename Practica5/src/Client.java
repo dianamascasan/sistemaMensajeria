@@ -15,8 +15,8 @@ public class Client {
 
     public static void main(String args[]) {
 
-        VAutentificacion menu;
-        menu = new VAutentificacion();
+        VSolicitudes menu;
+        menu = new VSolicitudes();
         menu.setVisible(true);
         try {
             int RMIPort;
