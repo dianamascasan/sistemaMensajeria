@@ -15,13 +15,13 @@ import java.util.Vector;
  *
  * @author M. L. Liu
  */
-public class CallbackServerImpl extends UnicastRemoteObject
-        implements CallbackServerInterface {
+public class ServerImpl extends UnicastRemoteObject
+        implements ServerInterface {
 
     private Vector clientList;
     private java.sql.Connection conexion;
 
-    public CallbackServerImpl() throws RemoteException {
+    public ServerImpl() throws RemoteException {
         super();
         clientList = new Vector();
         conexion();
@@ -33,7 +33,7 @@ public class CallbackServerImpl extends UnicastRemoteObject
     }
 
     public synchronized void registerForCallback(
-            CallbackClientInterface callbackClientObject)
+            ClientInterface callbackClientObject)
             throws java.rmi.RemoteException {
         // store the callback object into the vector
         if (!(clientList.contains(callbackClientObject))) {
@@ -48,7 +48,7 @@ public class CallbackServerImpl extends UnicastRemoteObject
 // @param id is an ID for the client; to be used by
 // the server to uniquely identify the registered client.
     public synchronized void unregisterForCallback(
-            CallbackClientInterface callbackClientObject)
+            ClientInterface callbackClientObject)
             throws java.rmi.RemoteException {
         if (clientList.removeElement(callbackClientObject)) {
             System.out.println("Unregistered client ");
@@ -66,8 +66,8 @@ public class CallbackServerImpl extends UnicastRemoteObject
         for (int i = 0; i < clientList.size(); i++) {
             System.out.println("doing " + i + "-th callback\n");
             // convert the vector object to a callback object
-            CallbackClientInterface nextClient
-                    = (CallbackClientInterface) clientList.elementAt(i);
+            ClientInterface nextClient
+                    = (ClientInterface) clientList.elementAt(i);
             // invoke the callback method
             nextClient.notifyMe("Number of registered clients="
                     + clientList.size());
@@ -101,11 +101,11 @@ public class CallbackServerImpl extends UnicastRemoteObject
                     + configuracion.getProperty("baseDatos"),
                     usuario);
 //            try {
-//                PreparedStatement stmCategorias = conexion.prepareStatement("insert into public.\"Usuario\"(nombre,clave)" + " values(?, ?)");
+//                PreparedStatement stmCategorias = conexion.prepareStatement("insert into public.usuario"(nombre,clave)" + " values(?, ?)");
 //                stmCategorias.setString(1, "diana");
 //                stmCategorias.setString(2, "diana");
 //                stmCategorias.executeUpdate();
-//                PreparedStatement stmCategorias1 = conexion.prepareStatement("select * from public.\"Usuario\"");
+//                PreparedStatement stmCategorias1 = conexion.prepareStatement("select * from public.usuario");
 //
 //                ResultSet rsCategorias = stmCategorias1.executeQuery();
 //                while (rsCategorias.next()) {
@@ -120,7 +120,7 @@ public class CallbackServerImpl extends UnicastRemoteObject
 //                } catch (SQLException e) {
 //                    System.out.println("Imposible cerrar cursores");
 //                }
- //           }
+            //           }
         } catch (FileNotFoundException f) {
             System.out.println(f.getMessage());
 
