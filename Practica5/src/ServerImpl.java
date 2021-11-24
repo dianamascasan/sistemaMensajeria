@@ -7,6 +7,7 @@ import java.rmi.server.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.Properties;
 import java.util.Vector;
 
@@ -20,11 +21,13 @@ public class ServerImpl extends UnicastRemoteObject
 
     private Vector clientList;
     private java.sql.Connection conexion;
+    private HashMap<String, Usuario> usuariosConectados;
 
     public ServerImpl() throws RemoteException {
         super();
         clientList = new Vector();
         conexion();
+        this.usuariosConectados= new HashMap<>();
     }
 
     public String sayHello()
@@ -33,14 +36,16 @@ public class ServerImpl extends UnicastRemoteObject
     }
 
     public synchronized void registerForCallback(
-            ClientInterface callbackClientObject)
+            ClientInterface callbackClientObject, Usuario u)
             throws java.rmi.RemoteException {
         // store the callback object into the vector
         if (!(clientList.contains(callbackClientObject))) {
             clientList.addElement(callbackClientObject);
             System.out.println("Registered new client ");
-            doCallbacks();
-        } // end if
+            
+        }
+        this.usuariosConectados.put(u.getNombre(), u);
+        doCallbacks();
     }
 
 // This remote method allows an object client to 
@@ -131,4 +136,62 @@ public class ServerImpl extends UnicastRemoteObject
 
     }
 
+    public String verificarUsuario(String usuario, String clave) {
+        PreparedStatement stmCategorias = null;
+        try {
+            stmCategorias = conexion.prepareStatement("select nombre from usuario where nombre=? and clave=?");
+            stmCategorias.setString(1, usuario);
+            stmCategorias.setString(2, clave);
+            ResultSet rsCategorias = stmCategorias.executeQuery();
+            while (rsCategorias.next()) {
+                return rsCategorias.getString("nombre");
+                
+                
+                 
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                stmCategorias.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+
+        }
+        return null;
+
+    }
+    
+    public void buscarAmigos(Usuario usuario) {
+        PreparedStatement stmCategorias = null;
+        
+        try {
+            stmCategorias = conexion.prepareStatement("select nombreusuarioamigo from public.usuarioamigo where nombreusuario=? and aceptado=1");
+            stmCategorias.setString(1, usuario.getNombre());
+            
+            ResultSet rsCategorias = stmCategorias.executeQuery();
+            while (rsCategorias.next()) {
+                String u=rsCategorias.getString("nombre");
+                for(String nombre : usuariosConectados.keySet()){
+                    if(nombre.equals(u)){
+                        usuario.setAmigos(usuariosConectados.get(nombre));
+                    }
+                }
+                
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                stmCategorias.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+
+        }
+
+    }
 }// end CallbackServerImpl class   

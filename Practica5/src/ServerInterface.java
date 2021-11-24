@@ -18,7 +18,7 @@ public interface ServerInterface extends Remote {
 //        to make its callbacks.
 
   public void registerForCallback(
-    ClientInterface callbackClientObject
+    ClientInterface callbackClientObject , Usuario u
     ) throws java.rmi.RemoteException;
 
 // This remote method allows an object client to 
@@ -27,4 +27,8 @@ public interface ServerInterface extends Remote {
   public void unregisterForCallback(
     ClientInterface callbackClientObject)
     throws java.rmi.RemoteException;
+  
+  public String verificarUsuario(String usuario, String clave);
+  public void buscarAmigos(Usuario usuario);
+  
 }

@@ -1,20 +1,39 @@
+
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author diana
  */
 public class VAutentificacion extends javax.swing.JFrame {
 
+    private String IP;
+    private Integer portNum;
+    private ServerInterface h;
+
     /**
      * Creates new form VAutentificacion
      */
-    public VAutentificacion() {
+    public VAutentificacion(String IP, Integer portNum) throws NotBoundException, MalformedURLException, RemoteException {
         initComponents();
+        this.IP = IP;
+        this.portNum = portNum;
+        String registryURL;
+        registryURL = "rmi://" + IP + ":" + portNum + "/callback";
+            // find the remote object and cast it to an 
+        //   interface object
+        this.h = (ServerInterface) Naming.lookup(registryURL);
+
     }
 
     /**
@@ -28,19 +47,25 @@ public class VAutentificacion extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextPane1 = new javax.swing.JTextPane();
+        jUsuario = new javax.swing.JTextPane();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         login = new javax.swing.JButton();
         registro = new javax.swing.JButton();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        jClave = new javax.swing.JPasswordField();
         jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jIP = new javax.swing.JTextPane();
+        jLabel11 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jPuerto = new javax.swing.JTextPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(244, 242, 255));
 
-        jScrollPane1.setViewportView(jTextPane1);
+        jScrollPane1.setViewportView(jUsuario);
 
         jLabel7.setFont(new java.awt.Font("OCR A Extended", 0, 16)); // NOI18N
         jLabel7.setText("NOMBRE DE USUARIO: ");
@@ -66,14 +91,24 @@ public class VAutentificacion extends javax.swing.JFrame {
             }
         });
 
-        jPasswordField1.addActionListener(new java.awt.event.ActionListener() {
+        jClave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jPasswordField1ActionPerformed(evt);
+                jClaveActionPerformed(evt);
             }
         });
 
         jLabel9.setFont(new java.awt.Font("Segoe UI Black", 0, 30)); // NOI18N
         jLabel9.setText("BIENVENIDO");
+
+        jLabel10.setFont(new java.awt.Font("OCR A Extended", 0, 16)); // NOI18N
+        jLabel10.setText("IP:");
+
+        jScrollPane2.setViewportView(jIP);
+
+        jLabel11.setFont(new java.awt.Font("OCR A Extended", 0, 16)); // NOI18N
+        jLabel11.setText("PUERTO:");
+
+        jScrollPane3.setViewportView(jPuerto);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -84,14 +119,26 @@ public class VAutentificacion extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(38, 38, 38)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(login)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
-                                    .addComponent(registro, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(jPasswordField1, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING))))
+                            .addComponent(jScrollPane2)
+                            .addComponent(jScrollPane3)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel7)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addComponent(login)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                                            .addComponent(registro, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(jClave, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(52, 52, 52)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel11)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addGap(22, 22, 22)
+                                                .addComponent(jLabel10)))))
+                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(96, 96, 96)
                         .addComponent(jLabel8))
@@ -111,9 +158,17 @@ public class VAutentificacion extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20)
                 .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jClave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(login, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(registro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -137,60 +192,57 @@ public class VAutentificacion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
-        // TODO add your handling code here:
+        if (!jUsuario.getText().isEmpty() && !jClave.getText().isEmpty() && !jIP.getText().isEmpty() && !jPuerto.getText().isEmpty()) {
+            String nombre = this.h.verificarUsuario(jUsuario.getText(), jClave.getText());
+            
+            if (nombre != null) {
+                try {
+                    System.out.println("Server said " + h.sayHello());
+                    ClientInterface callbackObj
+                            = new ClientImpl();
+                    // register for callback
+                    Usuario usuario=new Usuario(nombre, jIP.getText(), Integer.parseInt(jPuerto.getText()) );
+                    h.buscarAmigos(usuario);
+                    h.registerForCallback(callbackObj, usuario);
+                    System.out.println("Registered for callback.");
+                    System.out.println("Lookup completed ");
+                    h.unregisterForCallback(callbackObj);
+                    System.out.println("Unregistered for callback.");
+
+                } catch (RemoteException ex) {
+                    Logger.getLogger(VAutentificacion.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+        }
     }//GEN-LAST:event_loginActionPerformed
 
     private void registroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registroActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_registroActionPerformed
 
-    private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1ActionPerformed
+    private void jClaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jClaveActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jPasswordField1ActionPerformed
+    }//GEN-LAST:event_jClaveActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VAutentificacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VAutentificacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VAutentificacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VAutentificacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new VAutentificacion().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPasswordField jClave;
+    private javax.swing.JTextPane jIP;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPasswordField jPasswordField1;
+    private javax.swing.JTextPane jPuerto;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextPane jTextPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTextPane jUsuario;
     private javax.swing.JButton login;
     private javax.swing.JButton registro;
     // End of variables declaration//GEN-END:variables
