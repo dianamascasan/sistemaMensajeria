@@ -164,19 +164,21 @@ public class ServerImpl extends UnicastRemoteObject
 
     }
     
-    public void buscarAmigos(Usuario usuario) {
+    public HashMap<String, Usuario> buscarAmigos(Usuario usuario) {
         PreparedStatement stmCategorias = null;
-        
+        HashMap<String, Usuario> amigos=new HashMap<>();
         try {
-            stmCategorias = conexion.prepareStatement("select nombreusuarioamigo from public.usuarioamigo where nombreusuario=? and aceptado=1");
+            stmCategorias = conexion.prepareStatement("select nombreusuarioamigo from public.usuarioamigo where nombreusuario=? and aceptado=true");
             stmCategorias.setString(1, usuario.getNombre());
             
             ResultSet rsCategorias = stmCategorias.executeQuery();
             while (rsCategorias.next()) {
-                String u=rsCategorias.getString("nombre");
+                String u=rsCategorias.getString("nombreusuarioamigo");
                 for(String nombre : usuariosConectados.keySet()){
                     if(nombre.equals(u)){
+                        System.out.println(nombre);
                         usuario.setAmigos(usuariosConectados.get(nombre));
+                        amigos.put(usuariosConectados.get(nombre).getNombre(),usuariosConectados.get(nombre));
                     }
                 }
                 
@@ -192,6 +194,7 @@ public class ServerImpl extends UnicastRemoteObject
             }
 
         }
+        return amigos;
 
     }
 }// end CallbackServerImpl class   

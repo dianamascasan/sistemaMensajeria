@@ -1,4 +1,5 @@
 import java.rmi.*;
+import java.util.HashMap;
 
 /**
  * This is a remote interface for illustrating RMI 
@@ -28,7 +29,7 @@ public interface ServerInterface extends Remote {
     ClientInterface callbackClientObject)
     throws java.rmi.RemoteException;
   
-  public String verificarUsuario(String usuario, String clave);
-  public void buscarAmigos(Usuario usuario);
+  public String verificarUsuario(String usuario, String clave) throws java.rmi.RemoteException;
+  public HashMap<String, Usuario> buscarAmigos(Usuario usuario) throws java.rmi.RemoteException;
   
 }

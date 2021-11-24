@@ -193,7 +193,12 @@ public class VAutentificacion extends javax.swing.JFrame {
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
         if (!jUsuario.getText().isEmpty() && !jClave.getText().isEmpty() && !jIP.getText().isEmpty() && !jPuerto.getText().isEmpty()) {
-            String nombre = this.h.verificarUsuario(jUsuario.getText(), jClave.getText());
+            String nombre=null;
+            try {
+                nombre = this.h.verificarUsuario(jUsuario.getText(), jClave.getText());
+            } catch (RemoteException ex) {
+                Logger.getLogger(VAutentificacion.class.getName()).log(Level.SEVERE, null, ex);
+            }
             
             if (nombre != null) {
                 try {
@@ -202,7 +207,11 @@ public class VAutentificacion extends javax.swing.JFrame {
                             = new ClientImpl();
                     // register for callback
                     Usuario usuario=new Usuario(nombre, jIP.getText(), Integer.parseInt(jPuerto.getText()) );
-                    h.buscarAmigos(usuario);
+                    
+                    for(Usuario  u : h.buscarAmigos(usuario).values()){
+                        System.out.println(u.getPuerto());
+                        usuario.setAmigos(u);
+                    }
                     h.registerForCallback(callbackObj, usuario);
                     System.out.println("Registered for callback.");
                     System.out.println("Lookup completed ");

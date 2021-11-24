@@ -1,4 +1,5 @@
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 /*
@@ -11,8 +12,8 @@ import java.util.HashMap;
  *
  * @author teres
  */
-public class Usuario {
-    private String nombre;
+public class Usuario implements Serializable  {
+    private  String nombre;
     private String IP;
     private Integer puerto;
     private HashMap<String, Usuario> amigos;
