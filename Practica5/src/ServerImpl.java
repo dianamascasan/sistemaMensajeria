@@ -27,7 +27,7 @@ public class ServerImpl extends UnicastRemoteObject
         super();
         clientList = new Vector();
         conexion();
-        this.usuariosConectados= new HashMap<>();
+        this.usuariosConectados = new HashMap<>();
     }
 
     public String sayHello()
@@ -42,7 +42,7 @@ public class ServerImpl extends UnicastRemoteObject
         if (!(clientList.contains(callbackClientObject))) {
             clientList.addElement(callbackClientObject);
             System.out.println("Registered new client ");
-            
+
         }
         this.usuariosConectados.put(u.getNombre(), u);
         doCallbacks();
@@ -136,6 +136,24 @@ public class ServerImpl extends UnicastRemoteObject
 
     }
 
+    @Override
+    public void registrarUsuario(String usuario, String clave) {
+        PreparedStatement stmCategorias = null;
+        try {
+            stmCategorias = conexion.prepareStatement("insert into public.usuario(nombre,clave) values(?,?)");
+            stmCategorias.setString(1, usuario);
+            stmCategorias.setString(2, clave);
+            stmCategorias.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+
+        }
+
+    }
+
+    @Override
     public String verificarUsuario(String usuario, String clave) {
         PreparedStatement stmCategorias = null;
         try {
@@ -145,9 +163,7 @@ public class ServerImpl extends UnicastRemoteObject
             ResultSet rsCategorias = stmCategorias.executeQuery();
             while (rsCategorias.next()) {
                 return rsCategorias.getString("nombre");
-                
-                
-                 
+
             }
 
         } catch (SQLException e) {
@@ -163,25 +179,25 @@ public class ServerImpl extends UnicastRemoteObject
         return null;
 
     }
-    
+
     public HashMap<String, Usuario> buscarAmigos(Usuario usuario) {
         PreparedStatement stmCategorias = null;
-        HashMap<String, Usuario> amigos=new HashMap<>();
+        HashMap<String, Usuario> amigos = new HashMap<>();
         try {
             stmCategorias = conexion.prepareStatement("select nombreusuarioamigo from public.usuarioamigo where nombreusuario=? and aceptado=true");
             stmCategorias.setString(1, usuario.getNombre());
-            
+
             ResultSet rsCategorias = stmCategorias.executeQuery();
             while (rsCategorias.next()) {
-                String u=rsCategorias.getString("nombreusuarioamigo");
-                for(String nombre : usuariosConectados.keySet()){
-                    if(nombre.equals(u)){
+                String u = rsCategorias.getString("nombreusuarioamigo");
+                for (String nombre : usuariosConectados.keySet()) {
+                    if (nombre.equals(u)) {
                         System.out.println(nombre);
                         usuario.setAmigos(usuariosConectados.get(nombre));
-                        amigos.put(usuariosConectados.get(nombre).getNombre(),usuariosConectados.get(nombre));
+                        amigos.put(usuariosConectados.get(nombre).getNombre(), usuariosConectados.get(nombre));
                     }
                 }
-                
+
             }
 
         } catch (SQLException e) {

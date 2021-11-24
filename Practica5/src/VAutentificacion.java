@@ -30,7 +30,7 @@ public class VAutentificacion extends javax.swing.JFrame {
         this.portNum = portNum;
         String registryURL;
         registryURL = "rmi://" + IP + ":" + portNum + "/callback";
-            // find the remote object and cast it to an 
+        // find the remote object and cast it to an 
         //   interface object
         this.h = (ServerInterface) Naming.lookup(registryURL);
 
@@ -193,22 +193,22 @@ public class VAutentificacion extends javax.swing.JFrame {
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
         if (!jUsuario.getText().isEmpty() && !jClave.getText().isEmpty() && !jIP.getText().isEmpty() && !jPuerto.getText().isEmpty()) {
-            String nombre=null;
+            String nombre = null;
             try {
                 nombre = this.h.verificarUsuario(jUsuario.getText(), jClave.getText());
             } catch (RemoteException ex) {
                 Logger.getLogger(VAutentificacion.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
             if (nombre != null) {
                 try {
                     System.out.println("Server said " + h.sayHello());
                     ClientInterface callbackObj
                             = new ClientImpl();
                     // register for callback
-                    Usuario usuario=new Usuario(nombre, jIP.getText(), Integer.parseInt(jPuerto.getText()) );
-                    
-                    for(Usuario  u : h.buscarAmigos(usuario).values()){
+                    Usuario usuario = new Usuario(nombre, jIP.getText(), Integer.parseInt(jPuerto.getText()));
+
+                    for (Usuario u : h.buscarAmigos(usuario).values()) {
                         System.out.println(u.getPuerto());
                         usuario.setAmigos(u);
                     }
@@ -228,6 +228,34 @@ public class VAutentificacion extends javax.swing.JFrame {
 
     private void registroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registroActionPerformed
         // TODO add your handling code here:
+        if (!jUsuario.getText().isEmpty() && !jClave.getText().isEmpty() && !jIP.getText().isEmpty() && !jPuerto.getText().isEmpty()) {
+
+            try {
+                this.h.registrarUsuario(jUsuario.getText(), jClave.getText());
+            } catch (RemoteException ex) {
+                Logger.getLogger(VAutentificacion.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            try {
+                System.out.println("Server said " + h.sayHello());
+                ClientInterface callbackObj
+                        = new ClientImpl();
+                // register for callback
+                Usuario usuario = new Usuario(jUsuario.getText(), jIP.getText(), Integer.parseInt(jPuerto.getText()));
+
+                h.registerForCallback(callbackObj, usuario);
+                System.out.println("Registered for callback.");
+                System.out.println("Lookup completed ");
+                h.unregisterForCallback(callbackObj);
+                System.out.println("Unregistered for callback.");
+
+            } catch (RemoteException ex) {
+                Logger.getLogger(VAutentificacion.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+
+
     }//GEN-LAST:event_registroActionPerformed
 
     private void jClaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jClaveActionPerformed
