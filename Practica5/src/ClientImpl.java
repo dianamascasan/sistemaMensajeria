@@ -14,6 +14,7 @@ public class ClientImpl extends UnicastRemoteObject
       super( );
    }
 
+   @Override
    public String notifyMe(String message){
       String returnMessage = "Call back received: " + message;
       System.out.println(returnMessage);

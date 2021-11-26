@@ -26,6 +26,7 @@ public class VAutentificacion extends javax.swing.JFrame {
      */
     public VAutentificacion(String IP, Integer portNum) throws NotBoundException, MalformedURLException, RemoteException {
         initComponents();
+        jIP.setText("localhost");
         this.IP = IP;
         this.portNum = portNum;
         String registryURL;
@@ -65,6 +66,7 @@ public class VAutentificacion extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(244, 242, 255));
 
+        jUsuario.setFont(new java.awt.Font("OCR A Extended", 0, 16)); // NOI18N
         jScrollPane1.setViewportView(jUsuario);
 
         jLabel7.setFont(new java.awt.Font("OCR A Extended", 0, 16)); // NOI18N
@@ -91,6 +93,7 @@ public class VAutentificacion extends javax.swing.JFrame {
             }
         });
 
+        jClave.setFont(new java.awt.Font("OCR A Extended", 0, 16)); // NOI18N
         jClave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jClaveActionPerformed(evt);
@@ -103,11 +106,13 @@ public class VAutentificacion extends javax.swing.JFrame {
         jLabel10.setFont(new java.awt.Font("OCR A Extended", 0, 16)); // NOI18N
         jLabel10.setText("IP:");
 
+        jIP.setFont(new java.awt.Font("OCR A Extended", 0, 16)); // NOI18N
         jScrollPane2.setViewportView(jIP);
 
         jLabel11.setFont(new java.awt.Font("OCR A Extended", 0, 16)); // NOI18N
         jLabel11.setText("PUERTO:");
 
+        jPuerto.setFont(new java.awt.Font("OCR A Extended", 0, 16)); // NOI18N
         jScrollPane3.setViewportView(jPuerto);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -117,34 +122,31 @@ public class VAutentificacion extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2)
-                            .addComponent(jScrollPane3)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel7)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addComponent(login)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
-                                            .addComponent(registro, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addComponent(jClave, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(52, 52, 52)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel11)
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addGap(22, 22, 22)
-                                                .addComponent(jLabel10)))))
-                                .addGap(0, 0, Short.MAX_VALUE))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(96, 96, 96)
                         .addComponent(jLabel8))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(30, 30, 30)
-                        .addComponent(jLabel9)))
+                        .addComponent(jLabel9))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(login)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                                    .addComponent(registro, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jClave, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(52, 52, 52)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel11)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(22, 22, 22)
+                                        .addComponent(jLabel10))))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(28, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -168,11 +170,11 @@ public class VAutentificacion extends javax.swing.JFrame {
                 .addComponent(jLabel11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(login, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(registro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addComponent(registro, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -185,7 +187,7 @@ public class VAutentificacion extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -218,6 +220,11 @@ public class VAutentificacion extends javax.swing.JFrame {
                     h.unregisterForCallback(callbackObj);
                     System.out.println("Unregistered for callback.");
 
+                    VChat chat;
+                    chat = new VChat(this, usuario);
+                    this.setVisible(false);
+                    chat.setVisible(true);
+
                 } catch (RemoteException ex) {
                     Logger.getLogger(VAutentificacion.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -248,6 +255,11 @@ public class VAutentificacion extends javax.swing.JFrame {
                 System.out.println("Lookup completed ");
                 h.unregisterForCallback(callbackObj);
                 System.out.println("Unregistered for callback.");
+
+                VChat chat;
+                chat = new VChat(this, usuario);
+                this.setVisible(false);
+                chat.setVisible(true);
 
             } catch (RemoteException ex) {
                 Logger.getLogger(VAutentificacion.class.getName()).log(Level.SEVERE, null, ex);

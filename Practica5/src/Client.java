@@ -1,6 +1,6 @@
 
 import java.io.*;
-import java.rmi.*;
+import java.rmi.NotBoundException;
 
 /**
  * This class represents the object client for a distributed object of class
@@ -14,8 +14,6 @@ import java.rmi.*;
 public class Client {
 
     public static void main(String args[]) {
-
-        
         try {
             int RMIPort;
             String hostName;
@@ -34,7 +32,7 @@ public class Client {
             menu.setVisible(true);
             
         } // end try 
-        catch (Exception e) {
+        catch (IOException | NumberFormatException | NotBoundException e) {
             System.out.println(
                     "Exception in CallbackClient: " + e);
         } // end catch
