@@ -61,6 +61,7 @@ public class VAutentificacion extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jPuerto = new javax.swing.JTextPane();
+        jAviso = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -70,10 +71,10 @@ public class VAutentificacion extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jUsuario);
 
         jLabel7.setFont(new java.awt.Font("OCR A Extended", 0, 16)); // NOI18N
-        jLabel7.setText("NOMBRE DE USUARIO: ");
+        jLabel7.setText("(*)NOMBRE DE USUARIO: ");
 
         jLabel8.setFont(new java.awt.Font("OCR A Extended", 0, 16)); // NOI18N
-        jLabel8.setText("CLAVE:");
+        jLabel8.setText("(*) CLAVE:");
 
         login.setBackground(new java.awt.Color(225, 222, 240));
         login.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8-log-in-64.png"))); // NOI18N
@@ -104,16 +105,21 @@ public class VAutentificacion extends javax.swing.JFrame {
         jLabel9.setText("BIENVENIDO");
 
         jLabel10.setFont(new java.awt.Font("OCR A Extended", 0, 16)); // NOI18N
-        jLabel10.setText("IP:");
+        jLabel10.setText("(*) IP:");
 
         jIP.setFont(new java.awt.Font("OCR A Extended", 0, 16)); // NOI18N
         jScrollPane2.setViewportView(jIP);
 
         jLabel11.setFont(new java.awt.Font("OCR A Extended", 0, 16)); // NOI18N
-        jLabel11.setText("PUERTO:");
+        jLabel11.setText("(*) PUERTO:");
 
         jPuerto.setFont(new java.awt.Font("OCR A Extended", 0, 16)); // NOI18N
         jScrollPane3.setViewportView(jPuerto);
+
+        jAviso.setBackground(new java.awt.Color(255, 51, 51));
+        jAviso.setFont(new java.awt.Font("OCR A Extended", 1, 12)); // NOI18N
+        jAviso.setForeground(new java.awt.Color(255, 51, 51));
+        jAviso.setText("(*) Campos obligatorios");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -122,32 +128,28 @@ public class VAutentificacion extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(96, 96, 96)
-                        .addComponent(jLabel8))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(30, 30, 30)
                         .addComponent(jLabel9))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(38, 38, 38)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                            .addGap(20, 20, 20)
+                            .addComponent(jLabel7))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                            .addGap(38, 38, 38)
+                            .addComponent(login)
+                            .addGap(18, 18, 18)
+                            .addComponent(registro, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(login)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
-                                    .addComponent(registro, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(jClave, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(52, 52, 52)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel11)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(22, 22, 22)
-                                        .addComponent(jLabel10))))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(28, Short.MAX_VALUE))
+                            .addComponent(jLabel8)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jScrollPane1)
+                                .addComponent(jScrollPane2)
+                                .addComponent(jClave, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE))
+                            .addComponent(jLabel10)
+                            .addComponent(jLabel11)
+                            .addComponent(jAviso))))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -156,11 +158,11 @@ public class VAutentificacion extends javax.swing.JFrame {
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(8, 8, 8)
                 .addComponent(jClave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel10)
@@ -170,11 +172,13 @@ public class VAutentificacion extends javax.swing.JFrame {
                 .addComponent(jLabel11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(login, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(26, 26, 26)
+                .addComponent(jAviso)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(login, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(registro, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -187,7 +191,7 @@ public class VAutentificacion extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -236,14 +240,13 @@ public class VAutentificacion extends javax.swing.JFrame {
     private void registroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registroActionPerformed
         // TODO add your handling code here:
         if (!jUsuario.getText().isEmpty() && !jClave.getText().isEmpty() && !jIP.getText().isEmpty() && !jPuerto.getText().isEmpty()) {
-
+            
             try {
+                if(!this.h.usuarioYaExiste(jUsuario.getText())){
                 this.h.registrarUsuario(jUsuario.getText(), jClave.getText());
-            } catch (RemoteException ex) {
-                Logger.getLogger(VAutentificacion.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            
 
-            try {
+           
                 System.out.println("Server said " + h.sayHello());
                 ClientInterface callbackObj
                         = new ClientImpl();
@@ -260,7 +263,9 @@ public class VAutentificacion extends javax.swing.JFrame {
                 chat = new VChat(this, usuario);
                 this.setVisible(false);
                 chat.setVisible(true);
-
+                }else{
+                    jAviso.setText("Usuario ya existe");
+                }
             } catch (RemoteException ex) {
                 Logger.getLogger(VAutentificacion.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -279,6 +284,7 @@ public class VAutentificacion extends javax.swing.JFrame {
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jAviso;
     private javax.swing.JPasswordField jClave;
     private javax.swing.JTextPane jIP;
     private javax.swing.JLabel jLabel10;

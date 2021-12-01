@@ -31,7 +31,7 @@ public interface ServerInterface extends Remote {
   
   public String verificarUsuario(String usuario, String clave) throws java.rmi.RemoteException;
   public HashMap<String, Usuario> buscarAmigos(Usuario usuario) throws java.rmi.RemoteException;
-  
+  public boolean usuarioYaExiste(String usuario) throws java.rmi.RemoteException;
    public void registrarUsuario(String usuario, String clave) throws java.rmi.RemoteException;
   
 }

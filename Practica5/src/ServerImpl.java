@@ -179,6 +179,33 @@ public class ServerImpl extends UnicastRemoteObject
         return null;
 
     }
+    
+    @Override
+    public boolean usuarioYaExiste(String usuario) {
+        PreparedStatement stmCategorias = null;
+        try {
+            stmCategorias = conexion.prepareStatement("select nombre from usuario where nombre=?");
+            stmCategorias.setString(1, usuario);
+            ResultSet rsCategorias = stmCategorias.executeQuery();
+            while (rsCategorias.next()) {
+                return true;
+
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                stmCategorias.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+
+        }
+        return false;
+
+    }
+    
 
     public HashMap<String, Usuario> buscarAmigos(Usuario usuario) {
         PreparedStatement stmCategorias = null;
