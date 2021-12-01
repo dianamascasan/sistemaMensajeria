@@ -7,7 +7,7 @@ import javax.swing.table.AbstractTableModel;
  */
 public class ModeloTablaUsuarios extends AbstractTableModel {
 
-    private java.util.List<Usuario> usuario;
+    private java.util.List<String> usuario;
 
     public ModeloTablaUsuarios() {
         this.usuario = new java.util.ArrayList<>();
@@ -59,16 +59,16 @@ public class ModeloTablaUsuarios extends AbstractTableModel {
             switch (col) {
                 case 0:
 
-                    resultado = usuario.get(row).getNombre();
+                    resultado = usuario.get(row);
                     break;
             }
         }
         return resultado;
     }
 
-    public void setFilas(java.util.List<Usuario> avisos) {
+    public void setFilas(java.util.List<String> usuarios) {
         this.usuario.clear();
-        for (Usuario aux : avisos) {
+        for (String aux : usuario) {
             this.usuario.add(aux);
         }
         fireTableDataChanged();
@@ -79,8 +79,8 @@ public class ModeloTablaUsuarios extends AbstractTableModel {
         fireTableRowsDeleted(indice, indice);
     }
 
-    public void anadirFila(Usuario aviso) {
-        this.usuario.add(aviso);
+    public void anadirFila(String usuario) {
+        this.usuario.add(usuario);
         fireTableRowsInserted(this.usuario.size() - 1, this.usuario.size() - 1);
     }
 

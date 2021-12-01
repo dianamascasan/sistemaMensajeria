@@ -1,3 +1,8 @@
+
+import java.rmi.RemoteException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -16,11 +21,14 @@ public class VChat extends javax.swing.JDialog {
 
     public Usuario usuario;
     public VAutentificacion padre;
-    public VChat(java.awt.Frame padre, Usuario usuario) {
+    private ServerInterface serv;
+    
+    public VChat(java.awt.Frame padre, Usuario usuario, ServerInterface serv) {
         super(padre);
         initComponents();
         this.usuario = usuario;
         this.padre=(VAutentificacion) padre;
+        this.serv = serv;
         saludoCliente.setText("¡Hola " + usuario.getNombre().toUpperCase() + "!"); 
     }
 
@@ -188,8 +196,14 @@ public class VChat extends javax.swing.JDialog {
 
     private void solicitudesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_solicitudesActionPerformed
         // TODO add your handling code here:
-        VSolicitudes sol = new VSolicitudes(this, usuario);
-        sol.setVisible(true);
+        VSolicitudes sol;
+        try {
+            sol = new VSolicitudes(this, usuario, serv);
+            sol.setVisible(true);
+        } catch (RemoteException ex) {
+            Logger.getLogger(VChat.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
 
     }//GEN-LAST:event_solicitudesActionPerformed
 

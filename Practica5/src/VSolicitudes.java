@@ -1,9 +1,14 @@
+
+import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author diana
@@ -15,11 +20,26 @@ public class VSolicitudes extends javax.swing.JDialog {
      */
     public Usuario usuario;
     public VChat padre;
-    public VSolicitudes(VChat padre, Usuario usuario) {
+    private ArrayList<String> solicitudes;
+    private ServerInterface serv;
+
+    public VSolicitudes(VChat padre, Usuario usuario, ServerInterface serv) throws RemoteException {
         super(padre);
         initComponents();
         this.usuario = usuario;
         this.padre = padre;
+        this.solicitudes = new ArrayList<>();
+        this.serv = serv;
+        ModeloTablaUsuarios solicitudesUsuario;
+        solicitudesUsuario = (ModeloTablaUsuarios) jpendientes.getModel();
+        solicitudes = serv.solicitudesAmistad(usuario.getNombre());
+        for (String nombre : solicitudes) {
+            solicitudesUsuario.anadirFila(nombre);
+       
+           
+        }
+        
+
     }
 
     /**
@@ -41,7 +61,7 @@ public class VSolicitudes extends javax.swing.JDialog {
         jTable1 = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        jpendientes = new javax.swing.JTable();
         anadirAmigo = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
 
@@ -71,33 +91,18 @@ public class VSolicitudes extends javax.swing.JDialog {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
+        jTable1.setModel(new ModeloTablaUsuarios());
         jScrollPane2.setViewportView(jTable1);
 
         jPanel3.setBackground(new java.awt.Color(244, 242, 255));
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+        jpendientes.setModel(new ModeloTablaUsuarios());
+        jpendientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jpendientesMouseClicked(evt);
             }
-        ));
-        jScrollPane3.setViewportView(jTable2);
+        });
+        jScrollPane3.setViewportView(jpendientes);
 
         anadirAmigo.setBackground(new java.awt.Color(221, 222, 255));
         anadirAmigo.setFont(new java.awt.Font("OCR A Extended", 0, 18)); // NOI18N
@@ -195,14 +200,27 @@ public class VSolicitudes extends javax.swing.JDialog {
 
     private void anadirAmigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anadirAmigoActionPerformed
         // TODO add your handling code here:
+        ModeloTablaUsuarios solicitudesUsuario;
+        solicitudesUsuario = (ModeloTablaUsuarios) jpendientes.getModel();
+        try {
+            serv.aceptarAmistad(usuario.getNombre(), (String) solicitudesUsuario.getValueAt(jpendientes.getSelectedRow(), 0));
+        } catch (RemoteException ex) {
+            Logger.getLogger(VSolicitudes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_anadirAmigoActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
         padre.setVisible(true);
         this.dispose();
-        
+
     }//GEN-LAST:event_formWindowClosing
+
+    private void jpendientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpendientesMouseClicked
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jpendientesMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -217,7 +235,7 @@ public class VSolicitudes extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     private javax.swing.JTextPane jTextPane1;
+    private javax.swing.JTable jpendientes;
     // End of variables declaration//GEN-END:variables
 }

@@ -225,7 +225,7 @@ public class VAutentificacion extends javax.swing.JFrame {
                     System.out.println("Unregistered for callback.");
 
                     VChat chat;
-                    chat = new VChat(this, usuario);
+                    chat = new VChat(this, usuario, h);
                     this.setVisible(false);
                     chat.setVisible(true);
 
@@ -240,30 +240,27 @@ public class VAutentificacion extends javax.swing.JFrame {
     private void registroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registroActionPerformed
         // TODO add your handling code here:
         if (!jUsuario.getText().isEmpty() && !jClave.getText().isEmpty() && !jIP.getText().isEmpty() && !jPuerto.getText().isEmpty()) {
-            
+
             try {
-                if(!this.h.usuarioYaExiste(jUsuario.getText())){
-                this.h.registrarUsuario(jUsuario.getText(), jClave.getText());
-            
+                if (!this.h.usuarioYaExiste(jUsuario.getText())) {
+                    this.h.registrarUsuario(jUsuario.getText(), jClave.getText());
+                    System.out.println("Server said " + h.sayHello());
+                    ClientInterface callbackObj
+                            = new ClientImpl();
+                    // register for callback
+                    Usuario usuario = new Usuario(jUsuario.getText(), jIP.getText(), Integer.parseInt(jPuerto.getText()));
 
-           
-                System.out.println("Server said " + h.sayHello());
-                ClientInterface callbackObj
-                        = new ClientImpl();
-                // register for callback
-                Usuario usuario = new Usuario(jUsuario.getText(), jIP.getText(), Integer.parseInt(jPuerto.getText()));
+                    h.registerForCallback(callbackObj, usuario);
+                    System.out.println("Registered for callback.");
+                    System.out.println("Lookup completed ");
+                    h.unregisterForCallback(callbackObj);
+                    System.out.println("Unregistered for callback.");
 
-                h.registerForCallback(callbackObj, usuario);
-                System.out.println("Registered for callback.");
-                System.out.println("Lookup completed ");
-                h.unregisterForCallback(callbackObj);
-                System.out.println("Unregistered for callback.");
-
-                VChat chat;
-                chat = new VChat(this, usuario);
-                this.setVisible(false);
-                chat.setVisible(true);
-                }else{
+                    VChat chat;
+                    chat = new VChat(this, usuario, h);
+                    this.setVisible(false);
+                    chat.setVisible(true);
+                } else {
                     jAviso.setText("Usuario ya existe");
                 }
             } catch (RemoteException ex) {
