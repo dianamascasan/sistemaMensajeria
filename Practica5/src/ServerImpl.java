@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Properties;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * This class implements the remote interface CallbackServerInterface.
@@ -73,6 +75,28 @@ public class ServerImpl extends UnicastRemoteObject
                 + "Callbacks initiated ---");
         for(Usuario us : u.getAmigos().values()){
             us.getInterfaz().nuevoChat(u);
+        }
+        
+        
+        // end for
+        System.out.println("********************************\n"
+                + "Server completed callbacks ---");
+    } // doCallbacks
+    
+    private synchronized void solicitudAceptada(String usuario, String usuarioAmigo) throws java.rmi.RemoteException {
+        // make callback to each registered client
+        System.out.println(
+                "**************************************\n"
+                + "Callbacks initiated ---");
+        for(Usuario us : usuariosConectados.values()){
+            if(us.getNombre().equals(usuarioAmigo)){
+                us.getInterfaz().nuevoChat(usuariosConectados.get(usuario));
+            }
+        }
+        for(Usuario us : usuariosConectados.values()){
+            if(us.getNombre().equals(usuario)){
+                us.getInterfaz().nuevoChat(usuariosConectados.get(usuarioAmigo));
+            }
         }
         
         
@@ -172,7 +196,7 @@ public class ServerImpl extends UnicastRemoteObject
     public String verificarUsuario(String usuario, String clave) {
         PreparedStatement stmCategorias = null;
         try {
-            stmCategorias = conexion.prepareStatement("select nombre from usuario where nombre=? and clave=?");
+            stmCategorias = conexion.prepareStatement("select nombre from usuario where nombre=? and clave=crypt(?,clave)");
             stmCategorias.setString(1, usuario);
             stmCategorias.setString(2, clave);
             ResultSet rsCategorias = stmCategorias.executeQuery();
@@ -202,6 +226,7 @@ public class ServerImpl extends UnicastRemoteObject
         try {
             stmCategorias = conexion.prepareStatement("select nombre "
                     + "from usuario where nombre like ? "
+                    + "and nombre != ?"
                     + "and nombre not in "
                     + "(select nombreUsuario from usuarioAmigo where nombreUsuarioAmigo= ?)"
                     + "and nombre not in "
@@ -209,6 +234,7 @@ public class ServerImpl extends UnicastRemoteObject
             stmCategorias.setString(1, buscar + '%');
             stmCategorias.setString(2, usuario);
             stmCategorias.setString(3, usuario);
+            stmCategorias.setString(4, usuario);
             ResultSet rsCategorias = stmCategorias.executeQuery();
             while (rsCategorias.next()) {
                 usuarios.add(rsCategorias.getString("nombre"));
@@ -280,9 +306,12 @@ public class ServerImpl extends UnicastRemoteObject
             stmCategorias.setString(2, usuarioAmigo);
             stmCategorias.setBoolean(3, true);
             stmCategorias.executeUpdate();
+            solicitudAceptada(usuario, usuarioAmigo);
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+        } catch (RemoteException ex) {
+            Logger.getLogger(ServerImpl.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 stmCategorias.close();

@@ -43,5 +43,7 @@ public interface ServerInterface extends Remote {
     public void aceptarAmistad(String usuario, String usuarioAmigo) throws java.rmi.RemoteException;
 
     public void solicitarAmistad(String usuario, String usuarioAmigo) throws java.rmi.RemoteException;
+    
+    
 
 }

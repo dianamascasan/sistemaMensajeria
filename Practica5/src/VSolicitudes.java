@@ -90,7 +90,9 @@ public class VSolicitudes extends javax.swing.JDialog {
             }
         });
 
+        jTablaUsuarios.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jTablaUsuarios.setFont(new java.awt.Font("OCR A Extended", 0, 18)); // NOI18N
+        jTablaUsuarios.setForeground(new java.awt.Color(187, 119, 165));
         jTablaUsuarios.setModel(new ModeloTablaUsuarios());
         jTablaUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -101,7 +103,9 @@ public class VSolicitudes extends javax.swing.JDialog {
 
         jPanel3.setBackground(new java.awt.Color(244, 242, 255));
 
+        jpendientes.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jpendientes.setFont(new java.awt.Font("OCR A Extended", 0, 18)); // NOI18N
+        jpendientes.setForeground(new java.awt.Color(143, 105, 165));
         jpendientes.setModel(new ModeloTablaUsuarios());
         jpendientes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -220,7 +224,7 @@ public class VSolicitudes extends javax.swing.JDialog {
 
     private void jBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBuscarActionPerformed
         // TODO add your handling code here:
-        if (jBuscarNombre.getText().length() >= 3) {
+        if (jBuscarNombre.getText().length() >= 3 ) {
             try {
                 ModeloTablaUsuarios tablaUsuarios;
                 tablaUsuarios = (ModeloTablaUsuarios) jTablaUsuarios.getModel();
@@ -243,6 +247,7 @@ public class VSolicitudes extends javax.swing.JDialog {
         solicitudesUsuario = (ModeloTablaUsuarios) jpendientes.getModel();
         try {
             serv.aceptarAmistad(usuario.getNombre(), (String) solicitudesUsuario.getValueAt(jpendientes.getSelectedRow(), 0));
+            solicitudesUsuario.borrarFila(jpendientes.getSelectedRow());
         } catch (RemoteException ex) {
             Logger.getLogger(VSolicitudes.class.getName()).log(Level.SEVERE, null, ex);
         }
