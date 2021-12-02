@@ -35,10 +35,8 @@ public class VSolicitudes extends javax.swing.JDialog {
         solicitudes = serv.solicitudesAmistad(usuario.getNombre());
         for (String nombre : solicitudes) {
             solicitudesUsuario.anadirFila(nombre);
-       
-           
+
         }
-        
 
     }
 
@@ -55,15 +53,16 @@ public class VSolicitudes extends javax.swing.JDialog {
         jLabel10 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextPane1 = new javax.swing.JTextPane();
-        jButton1 = new javax.swing.JButton();
+        jBuscarNombre = new javax.swing.JTextPane();
+        jBuscar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTablaUsuarios = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jpendientes = new javax.swing.JTable();
         anadirAmigo = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
+        jSolicitar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -80,19 +79,19 @@ public class VSolicitudes extends javax.swing.JDialog {
         jLabel7.setFont(new java.awt.Font("OCR A Extended", 0, 16)); // NOI18N
         jLabel7.setText("Busca por el nombre de usuario:");
 
-        jScrollPane1.setViewportView(jTextPane1);
+        jScrollPane1.setViewportView(jBuscarNombre);
 
-        jButton1.setBackground(new java.awt.Color(255, 224, 255));
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8-búsqueda-24.png"))); // NOI18N
-        jButton1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jBuscar.setBackground(new java.awt.Color(255, 224, 255));
+        jBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8-búsqueda-24.png"))); // NOI18N
+        jBuscar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jBuscarActionPerformed(evt);
             }
         });
 
-        jTable1.setModel(new ModeloTablaUsuarios());
-        jScrollPane2.setViewportView(jTable1);
+        jTablaUsuarios.setModel(new ModeloTablaUsuarios());
+        jScrollPane2.setViewportView(jTablaUsuarios);
 
         jPanel3.setBackground(new java.awt.Color(244, 242, 255));
 
@@ -139,8 +138,16 @@ public class VSolicitudes extends javax.swing.JDialog {
                 .addComponent(anadirAmigo, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(61, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
+
+        jSolicitar.setBackground(new java.awt.Color(255, 219, 239));
+        jSolicitar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8-pregunta-30.png"))); // NOI18N
+        jSolicitar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jSolicitarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -149,29 +156,33 @@ public class VSolicitudes extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel10)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel10)
+                        .addGap(18, 18, 18)
+                        .addComponent(jSolicitar))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addComponent(jScrollPane1)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSolicitar))
                 .addGap(9, 9, 9)
                 .addComponent(jLabel7)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(jBuscar, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -184,19 +195,38 @@ public class VSolicitudes extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 725, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 535, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 512, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBuscarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        if (jBuscarNombre.getText().length() >= 3) {
+            try {
+                ModeloTablaUsuarios tablaUsuarios;
+                tablaUsuarios= (ModeloTablaUsuarios) jTablaUsuarios.getModel();
+                if(tablaUsuarios.getRowCount()>0){
+                    tablaUsuarios.borrarTabla();
+                }
+                ArrayList<String> usuarios = this.serv.buscarUsuario(jBuscarNombre.getText(), usuario.getNombre());
+                for (String nombre : usuarios) {
+                    tablaUsuarios.anadirFila(nombre);
+
+                }
+            } catch (RemoteException ex) {
+                
+
+                
+                Logger.getLogger(VSolicitudes.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jBuscarActionPerformed
 
     private void anadirAmigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anadirAmigoActionPerformed
         // TODO add your handling code here:
@@ -207,7 +237,7 @@ public class VSolicitudes extends javax.swing.JDialog {
         } catch (RemoteException ex) {
             Logger.getLogger(VSolicitudes.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }//GEN-LAST:event_anadirAmigoActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -219,13 +249,26 @@ public class VSolicitudes extends javax.swing.JDialog {
 
     private void jpendientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpendientesMouseClicked
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_jpendientesMouseClicked
+
+    private void jSolicitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jSolicitarActionPerformed
+        // TODO add your handling code here:
+         // TODO add your handling code here:
+        ModeloTablaUsuarios solicitudesUsuario;
+        solicitudesUsuario = (ModeloTablaUsuarios) jTablaUsuarios.getModel();
+        try {
+            serv.solicitarAmistad(usuario.getNombre(), (String) solicitudesUsuario.getValueAt(jTablaUsuarios.getSelectedRow(), 0));
+        } catch (RemoteException ex) {
+            Logger.getLogger(VSolicitudes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jSolicitarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton anadirAmigo;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jBuscar;
+    private javax.swing.JTextPane jBuscarNombre;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
@@ -234,8 +277,8 @@ public class VSolicitudes extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextPane jTextPane1;
+    private javax.swing.JButton jSolicitar;
+    private javax.swing.JTable jTablaUsuarios;
     private javax.swing.JTable jpendientes;
     // End of variables declaration//GEN-END:variables
 }

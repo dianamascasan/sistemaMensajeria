@@ -226,7 +226,7 @@ public class VAutentificacion extends javax.swing.JFrame {
 
                     VChat chat;
                     chat = new VChat(this, usuario, h);
-                    this.setVisible(false);
+                   
                     chat.setVisible(true);
 
                 } catch (RemoteException ex) {

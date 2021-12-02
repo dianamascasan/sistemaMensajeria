@@ -180,6 +180,39 @@ public class ServerImpl extends UnicastRemoteObject
         return null;
 
     }
+    
+    
+    @Override
+    public ArrayList<String> buscarUsuario(String buscar, String usuario) {
+        ArrayList<String> usuarios= new ArrayList<>();
+        PreparedStatement stmCategorias = null;
+        try {
+            stmCategorias = conexion.prepareStatement("select nombre "
+                    + "from usuario where nombre like ? "
+                    + "and nombre not in "
+                    + "(select nombreUsuario from usuarioAmigo where nombreUsuarioAmigo= ?)");
+            stmCategorias.setString(1, buscar+'%');
+            stmCategorias.setString(2, usuario);
+            ResultSet rsCategorias = stmCategorias.executeQuery();
+            while (rsCategorias.next()) {
+                usuarios.add( rsCategorias.getString("nombre"));
+
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                stmCategorias.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+
+        }
+        return usuarios;
+
+    }
+
 
     @Override
     public ArrayList<String> solicitudesAmistad(String usuario) {
@@ -229,6 +262,30 @@ public class ServerImpl extends UnicastRemoteObject
             stmCategorias.setString(1, usuario);
            stmCategorias.setString(2, usuarioAmigo);
            stmCategorias.setBoolean(3, true);
+            stmCategorias.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                stmCategorias.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+
+        }
+    }
+    
+    @Override
+    public void solicitarAmistad(String usuario, String usuarioAmigo) {
+        PreparedStatement stmCategorias = null;
+
+        try {
+            
+            stmCategorias = conexion.prepareStatement("insert into public.usuarioAmigo(nombreUsuario,nombreUsuarioAmigo,aceptado) values(?,?,?)");
+            stmCategorias.setString(1, usuario);
+           stmCategorias.setString(2, usuarioAmigo);
+           stmCategorias.setBoolean(3, false);
             stmCategorias.executeUpdate();
 
         } catch (SQLException e) {
