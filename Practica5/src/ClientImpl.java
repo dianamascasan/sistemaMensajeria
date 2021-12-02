@@ -10,15 +10,20 @@ import java.rmi.server.*;
 public class ClientImpl extends UnicastRemoteObject
      implements ClientInterface {
   
-   public ClientImpl() throws RemoteException {
+   private VChat ig;
+    
+    public ClientImpl(VChat ig) throws RemoteException {
       super( );
+      this.ig=ig;
    }
 
    @Override
-   public String notifyMe(String message){
-      String returnMessage = "Call back received: " + message;
-      System.out.println(returnMessage);
-      return returnMessage;
-   }      
+   public void nuevoChat(Usuario u) throws RemoteException{
+      this.ig.actualizarNuevosChats(u);
+   } 
+   @Override
+   public void borrarChat(Usuario u) throws RemoteException{
+      this.ig.borrarChats(u);
+   } 
 
 }// end CallbackClientImpl class   

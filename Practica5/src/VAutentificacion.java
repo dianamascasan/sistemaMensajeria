@@ -26,7 +26,7 @@ public class VAutentificacion extends javax.swing.JFrame {
      */
     public VAutentificacion(String IP, Integer portNum) throws NotBoundException, MalformedURLException, RemoteException {
         initComponents();
-        jIP.setText("localhost");
+        
         this.IP = IP;
         this.portNum = portNum;
         String registryURL;
@@ -55,12 +55,6 @@ public class VAutentificacion extends javax.swing.JFrame {
         registro = new javax.swing.JButton();
         jClave = new javax.swing.JPasswordField();
         jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jIP = new javax.swing.JTextPane();
-        jLabel11 = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jPuerto = new javax.swing.JTextPane();
         jAviso = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -104,18 +98,6 @@ public class VAutentificacion extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Segoe UI Black", 0, 30)); // NOI18N
         jLabel9.setText("BIENVENIDO");
 
-        jLabel10.setFont(new java.awt.Font("OCR A Extended", 0, 16)); // NOI18N
-        jLabel10.setText("(*) IP:");
-
-        jIP.setFont(new java.awt.Font("OCR A Extended", 0, 16)); // NOI18N
-        jScrollPane2.setViewportView(jIP);
-
-        jLabel11.setFont(new java.awt.Font("OCR A Extended", 0, 16)); // NOI18N
-        jLabel11.setText("(*) PUERTO:");
-
-        jPuerto.setFont(new java.awt.Font("OCR A Extended", 0, 16)); // NOI18N
-        jScrollPane3.setViewportView(jPuerto);
-
         jAviso.setBackground(new java.awt.Color(255, 51, 51));
         jAviso.setFont(new java.awt.Font("OCR A Extended", 1, 12)); // NOI18N
         jAviso.setForeground(new java.awt.Color(255, 51, 51));
@@ -134,21 +116,18 @@ public class VAutentificacion extends javax.swing.JFrame {
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                             .addGap(20, 20, 20)
                             .addComponent(jLabel7))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                            .addGap(38, 38, 38)
-                            .addComponent(login)
-                            .addGap(18, 18, 18)
-                            .addComponent(registro, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel8)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(jScrollPane1)
-                                .addComponent(jScrollPane2)
                                 .addComponent(jClave, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE))
-                            .addComponent(jLabel10)
-                            .addComponent(jLabel11)
-                            .addComponent(jAviso))))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                    .addGap(18, 18, 18)
+                                    .addComponent(login)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(registro, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jAviso)))))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -165,20 +144,12 @@ public class VAutentificacion extends javax.swing.JFrame {
                 .addGap(8, 8, 8)
                 .addComponent(jClave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel10)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel11)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
                 .addComponent(jAviso)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addGap(30, 30, 30)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(login, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(registro, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -191,14 +162,14 @@ public class VAutentificacion extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
-        if (!jUsuario.getText().isEmpty() && !jClave.getText().isEmpty() && !jIP.getText().isEmpty() && !jPuerto.getText().isEmpty()) {
+        if (!jUsuario.getText().isEmpty() && !jClave.getText().isEmpty() ) {
             String nombre = null;
             try {
                 nombre = this.h.verificarUsuario(jUsuario.getText(), jClave.getText());
@@ -209,23 +180,23 @@ public class VAutentificacion extends javax.swing.JFrame {
             if (nombre != null) {
                 try {
                     System.out.println("Server said " + h.sayHello());
-                    ClientInterface callbackObj = new ClientImpl();
+                    VChat chat;
+                    chat = new VChat(this, h);
+                    ClientInterface callbackObj = new ClientImpl(chat);
                     // register for callback
-                    Usuario usuario = new Usuario(nombre, jIP.getText(), Integer.parseInt(jPuerto.getText()));
+                    Usuario usuario = new Usuario(nombre,callbackObj);
 
                     for (Usuario u : h.buscarAmigos(usuario).values()) {
-                        System.out.println(u.getPuerto());
                         usuario.setAmigos(u);
                     }
                     h.registerForCallback(callbackObj, usuario);
                     System.out.println("Registered for callback.");
                     System.out.println("Lookup completed ");
-                    h.unregisterForCallback(callbackObj);
+                    
                     System.out.println("Unregistered for callback.");
 
-                    VChat chat;
-                    chat = new VChat(this, usuario, h);
-                   
+                    
+                    chat.setUsuario(usuario);
                     chat.setVisible(true);
 
                 } catch (RemoteException ex) {
@@ -240,26 +211,27 @@ public class VAutentificacion extends javax.swing.JFrame {
 
     private void registroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registroActionPerformed
         // TODO add your handling code here:
-        if (!jUsuario.getText().isEmpty() && !jClave.getText().isEmpty() && !jIP.getText().isEmpty() && !jPuerto.getText().isEmpty()) {
+        if (!jUsuario.getText().isEmpty() && !jClave.getText().isEmpty() ) {
 
             try {
                 if (!this.h.usuarioYaExiste(jUsuario.getText())) {
+                    VChat chat;
+                    chat = new VChat(this,this.h);
                     this.h.registrarUsuario(jUsuario.getText(), jClave.getText());
                     System.out.println("Server said " + h.sayHello());
                     ClientInterface callbackObj
-                            = new ClientImpl();
+                            = new ClientImpl(chat);
                     // register for callback
-                    Usuario usuario = new Usuario(jUsuario.getText(), jIP.getText(), Integer.parseInt(jPuerto.getText()));
+                    Usuario usuario = new Usuario(jUsuario.getText(),  callbackObj);
 
                     h.registerForCallback(callbackObj, usuario);
                     System.out.println("Registered for callback.");
                     System.out.println("Lookup completed ");
-                    h.unregisterForCallback(callbackObj);
+                    
                     System.out.println("Unregistered for callback.");
 
-                    VChat chat;
-                    chat = new VChat(this, usuario, h);
-                    this.setVisible(false);
+                    
+                    chat.setUsuario(usuario);
                     chat.setVisible(true);
                 } else {
                     jAviso.setText("Usuario ya existe");
@@ -284,17 +256,11 @@ public class VAutentificacion extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jAviso;
     private javax.swing.JPasswordField jClave;
-    private javax.swing.JTextPane jIP;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextPane jPuerto;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextPane jUsuario;
     private javax.swing.JButton login;
     private javax.swing.JButton registro;

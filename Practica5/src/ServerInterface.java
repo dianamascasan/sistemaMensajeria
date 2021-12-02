@@ -25,7 +25,7 @@ public interface ServerInterface extends Remote {
 // This remote method allows an object client to 
 // cancel its registration for callback
     public void unregisterForCallback(
-            ClientInterface callbackClientObject)
+            ClientInterface callbackClientObject, Usuario u)
             throws java.rmi.RemoteException;
 
     public String verificarUsuario(String usuario, String clave) throws java.rmi.RemoteException;

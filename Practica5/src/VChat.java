@@ -1,5 +1,6 @@
 
 import java.rmi.RemoteException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -8,7 +9,6 @@ import java.util.logging.Logger;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author diana
@@ -18,18 +18,29 @@ public class VChat extends javax.swing.JDialog {
     /**
      * Creates new form VChat
      */
-
-    public Usuario usuario;
-    public VAutentificacion padre;
+    private Usuario usuario;
+    private VAutentificacion padre;
     private ServerInterface serv;
-    
-    public VChat(java.awt.Frame padre, Usuario usuario, ServerInterface serv) {
+
+    public VChat(java.awt.Frame padre,ServerInterface serv) {
         super(padre);
         initComponents();
-        this.usuario = usuario;
-        this.padre=(VAutentificacion) padre;
+        
+        this.padre = (VAutentificacion) padre;
         this.serv = serv;
-        saludoCliente.setText("¡Hola " + usuario.getNombre().toUpperCase() + "!"); 
+        
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+        saludoCliente.setText("¡Hola " + usuario.getNombre().toUpperCase() + "!");
+        ModeloTablaUsuarios chats;
+        chats = (ModeloTablaUsuarios) jTablaAmigos.getModel();
+
+        for (String nombre : usuario.getAmigos().keySet()) {
+            chats.anadirFila(nombre);
+
+        }
     }
 
     /**
@@ -51,13 +62,18 @@ public class VChat extends javax.swing.JDialog {
         solicitudes = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        jTablaAmigos = new javax.swing.JTable();
         saludoCliente = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(825, 583));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(244, 249, 255));
 
@@ -124,18 +140,8 @@ public class VChat extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane4.setViewportView(jTable2);
+        jTablaAmigos.setModel(new ModeloTablaUsuarios());
+        jScrollPane4.setViewportView(jTablaAmigos);
 
         saludoCliente.setFont(new java.awt.Font("Segoe UI Black", 0, 30)); // NOI18N
 
@@ -203,11 +209,38 @@ public class VChat extends javax.swing.JDialog {
         } catch (RemoteException ex) {
             Logger.getLogger(VChat.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
 
     }//GEN-LAST:event_solicitudesActionPerformed
 
-   
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        try {
+            this.serv.unregisterForCallback(usuario.getInterfaz(), usuario);
+        } catch (RemoteException ex) {
+            Logger.getLogger(VChat.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_formWindowClosing
+
+    public void actualizarNuevosChats(Usuario u) throws RemoteException {
+
+        usuario.setAmigos(u);
+        ModeloTablaUsuarios chats;
+        chats = (ModeloTablaUsuarios) jTablaAmigos.getModel();
+        chats.anadirFila(u.getNombre());
+
+        
+    }
+    public void borrarChats(Usuario u) throws RemoteException {
+
+        usuario.borrarAmigos(u);
+        ModeloTablaUsuarios chats;
+        
+        chats = (ModeloTablaUsuarios) jTablaAmigos.getModel();
+        chats.borrarTabla();
+        chats.setFilas(usuario.getAmigos().keySet());
+
+        
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -220,7 +253,7 @@ public class VChat extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JTable jTablaAmigos;
     private javax.swing.JTextPane jTextPane1;
     private javax.swing.JTextPane jTextPane2;
     private javax.swing.JLabel saludoCliente;

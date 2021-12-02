@@ -46,7 +46,7 @@ public class ServerImpl extends UnicastRemoteObject
 
         }
         this.usuariosConectados.put(u.getNombre(), u);
-        doCallbacks();
+        conectado(u);
     }
 
 // This remote method allows an object client to 
@@ -54,7 +54,7 @@ public class ServerImpl extends UnicastRemoteObject
 // @param id is an ID for the client; to be used by
 // the server to uniquely identify the registered client.
     public synchronized void unregisterForCallback(
-            ClientInterface callbackClientObject)
+            ClientInterface callbackClientObject, Usuario u)
             throws java.rmi.RemoteException {
         if (clientList.removeElement(callbackClientObject)) {
             System.out.println("Unregistered client ");
@@ -62,9 +62,25 @@ public class ServerImpl extends UnicastRemoteObject
             System.out.println(
                     "unregister: clientwasn't registered.");
         }
+        desconectado(u);
+        this.usuariosConectados.remove(u.getNombre());
     }
 
-    private synchronized void doCallbacks() throws java.rmi.RemoteException {
+    private synchronized void conectado(Usuario u) throws java.rmi.RemoteException {
+        // make callback to each registered client
+        System.out.println(
+                "**************************************\n"
+                + "Callbacks initiated ---");
+        for(Usuario us : u.getAmigos().values()){
+            us.getInterfaz().nuevoChat(u);
+        }
+        
+        
+        // end for
+        System.out.println("********************************\n"
+                + "Server completed callbacks ---");
+    } // doCallbacks
+    private synchronized void desconectado(Usuario u) throws java.rmi.RemoteException {
         // make callback to each registered client
         System.out.println(
                 "**************************************\n"
@@ -75,13 +91,11 @@ public class ServerImpl extends UnicastRemoteObject
             ClientInterface nextClient
                     = (ClientInterface) clientList.elementAt(i);
             // invoke the callback method
-            nextClient.notifyMe("Number of registered clients="
-                    + clientList.size());
+            nextClient.borrarChat(u);
         }// end for
         System.out.println("********************************\n"
                 + "Server completed callbacks ---");
     } // doCallbacks
-
     /**
      *
      */
@@ -344,7 +358,7 @@ public class ServerImpl extends UnicastRemoteObject
                 for (String nombre : usuariosConectados.keySet()) {
                     if (nombre.equals(u)) {
                         System.out.println(nombre);
-                        usuario.setAmigos(usuariosConectados.get(nombre));
+                        //usuario.setAmigos(usuariosConectados.get(nombre));
                         amigos.put(usuariosConectados.get(nombre).getNombre(), usuariosConectados.get(nombre));
                     }
                 }

@@ -14,17 +14,21 @@ import java.util.HashMap;
  */
 public class Usuario implements Serializable  {
     private  String nombre;
-    private String IP;
-    private Integer puerto;
+    
     private HashMap<String, Usuario> amigos;
+    private ClientInterface interfaz;
 
-    public Usuario(String nombre, String IP, Integer puerto) {
+    public Usuario(String nombre,ClientInterface interfaz) {
         this.nombre = nombre;
-        this.IP = IP;
-        this.puerto = puerto;
+        
         this.amigos= new HashMap<>();
+        this.interfaz=interfaz;
     }
 
+    public ClientInterface getInterfaz() {
+        return interfaz;
+    }
+    
     public HashMap<String, Usuario> getAmigos() {
         return amigos;
     }
@@ -32,19 +36,16 @@ public class Usuario implements Serializable  {
     public void setAmigos(Usuario amigo) {
         this.amigos.put(amigo.getNombre(), amigo);
     }
+    public void borrarAmigos(Usuario amigo) {
+        this.amigos.remove(amigo.getNombre());
+    }
+   
 
     public String getNombre() {
         return nombre;
     }
 
-    public String getIP() {
-        return IP;
-    }
-
-    public Integer getPuerto() {
-        return puerto;
-    }
-    
+   
     
     
 }

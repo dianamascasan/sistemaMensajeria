@@ -14,7 +14,9 @@ public interface ClientInterface
   // @param message - a string containing information for the
   //                  client to process upon being called back.
 
-    public String notifyMe(String message) 
+    public void nuevoChat(Usuario u) 
+      throws java.rmi.RemoteException;
+    public void borrarChat(Usuario u) 
       throws java.rmi.RemoteException;
 
 } // end interface
