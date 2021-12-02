@@ -1,5 +1,4 @@
 
-
 import java.rmi.RemoteException;
 
 import java.util.logging.Level;
@@ -26,13 +25,12 @@ public class VChat extends javax.swing.JDialog {
 
     public VChat(java.awt.Frame padre, ServerInterface serv) {
         super(padre);
-        
+
         initComponents();
-        this.amigoChat=null;
+        this.amigoChat = null;
         this.padre = (VAutentificacion) padre;
         this.serv = serv;
         enviar.setEnabled(false);
-        
 
     }
 
@@ -303,9 +301,10 @@ public class VChat extends javax.swing.JDialog {
     }//GEN-LAST:event_enviarActionPerformed
     public void recibirMensaje(String mensaje, String nombreU) {
         usuario.getAmigos().get(nombreU).setConversacion(mensaje);
-        
+
         this.mostrarMensaje(mensaje, nombreU);
     }
+
     public void mostrarMensaje(String mensaje, String nombreU) {
         if (amigoChat != null) {
             if (amigoChat.getNombre().equals(nombreU)) {
@@ -361,10 +360,10 @@ public class VChat extends javax.swing.JDialog {
     }//GEN-LAST:event_jMensajeEnviarKeyReleased
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        jChat.append(usuario.getNombre() + ":  " + jMensajeEnviar.getText() + "\n");
-        
+        jChat.append(usuario.getNombre() + ":  " + "❤" + "\n");
+
         try {
-            amigoChat.getInterfaz().recibirMensaje(usuario.getNombre() + ":  " + "❤"+ "\n", usuario.getNombre());
+            amigoChat.getInterfaz().recibirMensaje(usuario.getNombre() + ":  " + "❤" + "\n", usuario.getNombre());
             amigoChat.setConversacion(usuario.getNombre() + ":  " + "❤" + "\n");
         } catch (RemoteException ex) {
             Logger.getLogger(VChat.class.getName()).log(Level.SEVERE, null, ex);
@@ -373,11 +372,11 @@ public class VChat extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        
-        jChat.append(usuario.getNombre() + ":  " + jMensajeEnviar.getText() + "\n");
-        
+
+        jChat.append(usuario.getNombre() + ":  " + "👋" + "\n");
+
         try {
-            amigoChat.getInterfaz().recibirMensaje(usuario.getNombre() + ":  " + "👋"+ "\n", usuario.getNombre());
+            amigoChat.getInterfaz().recibirMensaje(usuario.getNombre() + ":  " + "👋" + "\n", usuario.getNombre());
             amigoChat.setConversacion(usuario.getNombre() + ":  " + "👋" + "\n");
         } catch (RemoteException ex) {
             Logger.getLogger(VChat.class.getName()).log(Level.SEVERE, null, ex);
@@ -386,12 +385,12 @@ public class VChat extends javax.swing.JDialog {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        
-        jChat.append(usuario.getNombre() + ":  " + jMensajeEnviar.getText() + "\n");
-        
+
+        jChat.append(usuario.getNombre() + ":  " + "✨" + "\n");
+
         try {
-            amigoChat.getInterfaz().recibirMensaje(usuario.getNombre() + ":  " + "✨"+ "\n", usuario.getNombre());
-            amigoChat.setConversacion(usuario.getNombre() + ":  " +"✨" + "\n");
+            amigoChat.getInterfaz().recibirMensaje(usuario.getNombre() + ":  " + "✨" + "\n", usuario.getNombre());
+            amigoChat.setConversacion(usuario.getNombre() + ":  " + "✨" + "\n");
         } catch (RemoteException ex) {
             Logger.getLogger(VChat.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -399,10 +398,10 @@ public class VChat extends javax.swing.JDialog {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        jChat.append(usuario.getNombre() + ":  " + jMensajeEnviar.getText() + "\n");
-        
+        jChat.append(usuario.getNombre() + ":  " + "🎉" + "\n");
+
         try {
-            amigoChat.getInterfaz().recibirMensaje(usuario.getNombre() + ":  " + "🎉"+ "\n", usuario.getNombre());
+            amigoChat.getInterfaz().recibirMensaje(usuario.getNombre() + ":  " + "🎉" + "\n", usuario.getNombre());
             amigoChat.setConversacion(usuario.getNombre() + ":  " + "🎉" + "\n");
         } catch (RemoteException ex) {
             Logger.getLogger(VChat.class.getName()).log(Level.SEVERE, null, ex);
