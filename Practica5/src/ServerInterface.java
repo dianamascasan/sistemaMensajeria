@@ -33,12 +33,15 @@ public interface ServerInterface extends Remote {
     public HashMap<String, Usuario> buscarAmigos(Usuario usuario) throws java.rmi.RemoteException;
 
     public boolean usuarioYaExiste(String usuario) throws java.rmi.RemoteException;
+
     public ArrayList<String> buscarUsuario(String buscar, String usuario) throws java.rmi.RemoteException;
 
     public void registrarUsuario(String usuario, String clave) throws java.rmi.RemoteException;
 
     public ArrayList<String> solicitudesAmistad(String usuario) throws java.rmi.RemoteException;
-    
-    public void aceptarAmistad(String usuario, String usuarioAmigo)throws java.rmi.RemoteException;
-    public void solicitarAmistad(String usuario, String usuarioAmigo)throws java.rmi.RemoteException;
+
+    public void aceptarAmistad(String usuario, String usuarioAmigo) throws java.rmi.RemoteException;
+
+    public void solicitarAmistad(String usuario, String usuarioAmigo) throws java.rmi.RemoteException;
+
 }

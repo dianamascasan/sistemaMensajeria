@@ -180,22 +180,24 @@ public class ServerImpl extends UnicastRemoteObject
         return null;
 
     }
-    
-    
+
     @Override
     public ArrayList<String> buscarUsuario(String buscar, String usuario) {
-        ArrayList<String> usuarios= new ArrayList<>();
+        ArrayList<String> usuarios = new ArrayList<>();
         PreparedStatement stmCategorias = null;
         try {
             stmCategorias = conexion.prepareStatement("select nombre "
                     + "from usuario where nombre like ? "
                     + "and nombre not in "
-                    + "(select nombreUsuario from usuarioAmigo where nombreUsuarioAmigo= ?)");
-            stmCategorias.setString(1, buscar+'%');
+                    + "(select nombreUsuario from usuarioAmigo where nombreUsuarioAmigo= ?)"
+                    + "and nombre not in "
+                    + "(select nombreUsuarioAmigo from usuarioAmigo where nombreUsuario= ?)");
+            stmCategorias.setString(1, buscar + '%');
             stmCategorias.setString(2, usuario);
+            stmCategorias.setString(3, usuario);
             ResultSet rsCategorias = stmCategorias.executeQuery();
             while (rsCategorias.next()) {
-                usuarios.add( rsCategorias.getString("nombre"));
+                usuarios.add(rsCategorias.getString("nombre"));
 
             }
 
@@ -213,9 +215,9 @@ public class ServerImpl extends UnicastRemoteObject
 
     }
 
-
     @Override
-    public ArrayList<String> solicitudesAmistad(String usuario) {
+    public ArrayList<String> solicitudesAmistad(String usuario
+    ) {
         PreparedStatement stmCategorias = null;
         ArrayList<String> amigosSol = new ArrayList<>();
         try {
@@ -246,7 +248,8 @@ public class ServerImpl extends UnicastRemoteObject
     }
 
     @Override
-    public void aceptarAmistad(String usuario, String usuarioAmigo) {
+    public void aceptarAmistad(String usuario, String usuarioAmigo
+    ) {
         PreparedStatement stmCategorias = null;
 
         try {
@@ -257,11 +260,11 @@ public class ServerImpl extends UnicastRemoteObject
             stmCategorias.setString(2, usuarioAmigo);
             stmCategorias.setString(3, usuario);
             stmCategorias.executeUpdate();
-            
+
             stmCategorias = conexion.prepareStatement("insert into public.usuarioAmigo(nombreUsuario,nombreUsuarioAmigo,aceptado) values(?,?,?)");
             stmCategorias.setString(1, usuario);
-           stmCategorias.setString(2, usuarioAmigo);
-           stmCategorias.setBoolean(3, true);
+            stmCategorias.setString(2, usuarioAmigo);
+            stmCategorias.setBoolean(3, true);
             stmCategorias.executeUpdate();
 
         } catch (SQLException e) {
@@ -275,17 +278,18 @@ public class ServerImpl extends UnicastRemoteObject
 
         }
     }
-    
+
     @Override
-    public void solicitarAmistad(String usuario, String usuarioAmigo) {
+    public void solicitarAmistad(String usuario, String usuarioAmigo
+    ) {
         PreparedStatement stmCategorias = null;
 
         try {
-            
+
             stmCategorias = conexion.prepareStatement("insert into public.usuarioAmigo(nombreUsuario,nombreUsuarioAmigo,aceptado) values(?,?,?)");
             stmCategorias.setString(1, usuario);
-           stmCategorias.setString(2, usuarioAmigo);
-           stmCategorias.setBoolean(3, false);
+            stmCategorias.setString(2, usuarioAmigo);
+            stmCategorias.setBoolean(3, false);
             stmCategorias.executeUpdate();
 
         } catch (SQLException e) {
@@ -301,7 +305,8 @@ public class ServerImpl extends UnicastRemoteObject
     }
 
     @Override
-    public boolean usuarioYaExiste(String usuario) {
+    public boolean usuarioYaExiste(String usuario
+    ) {
         PreparedStatement stmCategorias = null;
         try {
             stmCategorias = conexion.prepareStatement("select nombre from usuario where nombre=?");

@@ -75,6 +75,7 @@ public class ModeloTablaUsuarios extends AbstractTableModel {
     }
     public void borrarTabla(){
         this.usuario.clear();
+        fireTableDataChanged();
     }
 
     public void borrarFila(int indice) {

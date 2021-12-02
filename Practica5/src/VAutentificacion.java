@@ -209,8 +209,7 @@ public class VAutentificacion extends javax.swing.JFrame {
             if (nombre != null) {
                 try {
                     System.out.println("Server said " + h.sayHello());
-                    ClientInterface callbackObj
-                            = new ClientImpl();
+                    ClientInterface callbackObj = new ClientImpl();
                     // register for callback
                     Usuario usuario = new Usuario(nombre, jIP.getText(), Integer.parseInt(jPuerto.getText()));
 
@@ -232,6 +231,8 @@ public class VAutentificacion extends javax.swing.JFrame {
                 } catch (RemoteException ex) {
                     Logger.getLogger(VAutentificacion.class.getName()).log(Level.SEVERE, null, ex);
                 }
+            } else {
+                jAviso.setText("Usuario no existe");
             }
 
         }
