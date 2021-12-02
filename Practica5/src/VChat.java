@@ -90,6 +90,7 @@ public class VChat extends javax.swing.JDialog {
         jScrollPane4.setViewportView(jTablaAmigos);
 
         saludoCliente.setFont(new java.awt.Font("Segoe UI Black", 0, 30)); // NOI18N
+        saludoCliente.setText("¡Hola Usuario!");
 
         jLabel10.setFont(new java.awt.Font("Segoe UI Black", 0, 30)); // NOI18N
         jLabel10.setText("CONECTADOS:");
