@@ -23,4 +23,7 @@ public interface ClientInterface
     public void recibirMensaje(String mensaje, String usuario)
             throws RemoteException;
 
+    public void hayNotificaciones()
+            throws RemoteException;
+
 } // end interface

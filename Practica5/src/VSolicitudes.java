@@ -30,12 +30,13 @@ public class VSolicitudes extends javax.swing.JDialog {
         this.padre = padre;
         this.solicitudes = new ArrayList<>();
         this.serv = serv;
+        anadirAmigo.setEnabled(false);
+        jSolicitar.setEnabled(false);
         ModeloTablaUsuarios solicitudesUsuario;
         solicitudesUsuario = (ModeloTablaUsuarios) jpendientes.getModel();
         solicitudes = serv.solicitudesAmistad(usuario.getNombre());
         for (String nombre : solicitudes) {
             solicitudesUsuario.anadirFila(nombre);
-
         }
 
     }
@@ -110,6 +111,11 @@ public class VSolicitudes extends javax.swing.JDialog {
         jpendientes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jpendientesMouseClicked(evt);
+            }
+        });
+        jpendientes.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jpendientesKeyReleased(evt);
             }
         });
         jScrollPane3.setViewportView(jpendientes);
@@ -243,8 +249,10 @@ public class VSolicitudes extends javax.swing.JDialog {
 
     private void anadirAmigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anadirAmigoActionPerformed
         // TODO add your handling code here:
+        
         ModeloTablaUsuarios solicitudesUsuario;
         solicitudesUsuario = (ModeloTablaUsuarios) jpendientes.getModel();
+       
         try {
             serv.aceptarAmistad(usuario.getNombre(), (String) solicitudesUsuario.getValueAt(jpendientes.getSelectedRow(), 0));
             solicitudesUsuario.borrarFila(jpendientes.getSelectedRow());
@@ -257,14 +265,14 @@ public class VSolicitudes extends javax.swing.JDialog {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
         padre.setVisible(true);
+        try {
+            padre.comprobarNotificaciones(usuario);
+        } catch (RemoteException ex) {
+            Logger.getLogger(VSolicitudes.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.dispose();
 
     }//GEN-LAST:event_formWindowClosing
-
-    private void jpendientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpendientesMouseClicked
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_jpendientesMouseClicked
 
     private void jSolicitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jSolicitarActionPerformed
         // TODO add your handling code here:
@@ -281,10 +289,7 @@ public class VSolicitudes extends javax.swing.JDialog {
             }
             ArrayList<String> usuarios = this.serv.buscarUsuario(jBuscarNombre.getText(), usuario.getNombre());
             for (String nombre : usuarios) {
-//                if (serv.buscarAmigosySolicitudes(usuario.getNombre()).contains(nombre)) {
-//                    
-//                    tablaUsuarios.borrarFila(nombre);
-//                }
+
                 tablaUsuarios.anadirFila(nombre);
             }
         } catch (RemoteException ex) {
@@ -294,8 +299,19 @@ public class VSolicitudes extends javax.swing.JDialog {
 
     private void jTablaUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTablaUsuariosMouseClicked
         // TODO add your handling code here:
+        jSolicitar.setEnabled(true);
 
     }//GEN-LAST:event_jTablaUsuariosMouseClicked
+
+    private void jpendientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpendientesMouseClicked
+        // TODO add your handling code here:
+        anadirAmigo.setEnabled(true);
+    }//GEN-LAST:event_jpendientesMouseClicked
+
+    private void jpendientesKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jpendientesKeyReleased
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jpendientesKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -33,11 +33,13 @@ public class ServerImpl extends UnicastRemoteObject
         this.usuariosConectados = new HashMap<>();
     }
 
+    @Override
     public String sayHello()
             throws java.rmi.RemoteException {
         return ("hello");
     }
 
+    @Override
     public synchronized void registerForCallback(
             ClientInterface callbackClientObject, Usuario u)
             throws java.rmi.RemoteException {
@@ -55,6 +57,7 @@ public class ServerImpl extends UnicastRemoteObject
 // cancel its registration for callback
 // @param id is an ID for the client; to be used by
 // the server to uniquely identify the registered client.
+    @Override
     public synchronized void unregisterForCallback(
             ClientInterface callbackClientObject, Usuario u)
             throws java.rmi.RemoteException {
@@ -73,37 +76,51 @@ public class ServerImpl extends UnicastRemoteObject
         System.out.println(
                 "**************************************\n"
                 + "Callbacks initiated ---");
-        for(Usuario us : u.getAmigos().values()){
+        for (Usuario us : u.getAmigos().values()) {
             us.getInterfaz().nuevoChat(u);
         }
-        
-        
+
         // end for
         System.out.println("********************************\n"
                 + "Server completed callbacks ---");
     } // doCallbacks
-    
+
     private synchronized void solicitudAceptada(String usuario, String usuarioAmigo) throws java.rmi.RemoteException {
         // make callback to each registered client
         System.out.println(
                 "**************************************\n"
                 + "Callbacks initiated ---");
-        for(Usuario us : usuariosConectados.values()){
-            if(us.getNombre().equals(usuarioAmigo)){
+        for (Usuario us : usuariosConectados.values()) {
+            if (us.getNombre().equals(usuarioAmigo)) {
                 us.getInterfaz().nuevoChat(usuariosConectados.get(usuario));
+                for (Usuario u : usuariosConectados.values()) {
+                    {
+                        if (u.getNombre().equals(usuario)) {
+                            us.getInterfaz().nuevoChat(usuariosConectados.get(usuario));
+                        }
+                    }
+                }
             }
         }
-        for(Usuario us : usuariosConectados.values()){
-            if(us.getNombre().equals(usuario)){
-                us.getInterfaz().nuevoChat(usuariosConectados.get(usuarioAmigo));
+        for (Usuario us : usuariosConectados.values()) {
+            if (us.getNombre().equals(usuario)) {
+                for (Usuario u : usuariosConectados.values()) {
+                    {
+                        if (u.getNombre().equals(usuarioAmigo)) {
+                            us.getInterfaz().nuevoChat(usuariosConectados.get(usuarioAmigo));
+                        }
+                    }
+
+                }
             }
-        }
-        
-        
-        // end for
-        System.out.println("********************************\n"
-                + "Server completed callbacks ---");
-    } // doCallbacks
+
+            // end for
+            System.out.println("********************************\n"
+                    + "Server completed callbacks ---");
+        } // doCallbacks
+
+    
+    }
     private synchronized void desconectado(Usuario u) throws java.rmi.RemoteException {
         // make callback to each registered client
         System.out.println(
@@ -120,9 +137,11 @@ public class ServerImpl extends UnicastRemoteObject
         System.out.println("********************************\n"
                 + "Server completed callbacks ---");
     } // doCallbacks
-    /**
-     *
-     */
+
+    private void avisarNotificaciones(Usuario usuarioPeticion) throws RemoteException {
+        usuarioPeticion.getInterfaz().hayNotificaciones();
+    }//doCallbacks
+
     public void conexion() {
 
         Properties configuracion = new Properties();
@@ -144,27 +163,7 @@ public class ServerImpl extends UnicastRemoteObject
                     + configuracion.getProperty("puerto") + "/"
                     + configuracion.getProperty("baseDatos"),
                     usuario);
-//            try {
-//                PreparedStatement stmCategorias = conexion.prepareStatement("insert into public.usuario"(nombre,clave)" + " values(?, ?)");
-//                stmCategorias.setString(1, "diana");
-//                stmCategorias.setString(2, "diana");
-//                stmCategorias.executeUpdate();
-//                PreparedStatement stmCategorias1 = conexion.prepareStatement("select * from public.usuario");
-//
-//                ResultSet rsCategorias = stmCategorias1.executeQuery();
-//                while (rsCategorias.next()) {
-//                    System.out.println(rsCategorias.getString("nombre") + rsCategorias.getString("clave"));
-//                }
-//
-//            } catch (SQLException e) {
-//                System.out.println(e.getMessage());
-//            } finally {
-//                try {
-//                    stmCategorias.close();
-//                } catch (SQLException e) {
-//                    System.out.println("Imposible cerrar cursores");
-//                }
-            //           }
+
         } catch (FileNotFoundException f) {
             System.out.println(f.getMessage());
 
@@ -257,7 +256,7 @@ public class ServerImpl extends UnicastRemoteObject
 
     @Override
     public ArrayList<String> solicitudesAmistad(String usuario
-    ) {
+    ) throws RemoteException {
         PreparedStatement stmCategorias = null;
         ArrayList<String> amigosSol = new ArrayList<>();
         try {
@@ -323,8 +322,7 @@ public class ServerImpl extends UnicastRemoteObject
     }
 
     @Override
-    public void solicitarAmistad(String usuario, String usuarioAmigo
-    ) {
+    public void solicitarAmistad(String usuario, String usuarioAmigo) throws RemoteException {
         PreparedStatement stmCategorias = null;
 
         try {
@@ -334,6 +332,12 @@ public class ServerImpl extends UnicastRemoteObject
             stmCategorias.setString(2, usuarioAmigo);
             stmCategorias.setBoolean(3, false);
             stmCategorias.executeUpdate();
+
+            for (Usuario u : usuariosConectados.values()) {
+                if (u.getNombre().equals(usuarioAmigo)) {
+                    avisarNotificaciones(usuariosConectados.get(usuarioAmigo));
+                }
+            }
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());

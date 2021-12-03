@@ -15,11 +15,14 @@ public class ClientImpl extends UnicastRemoteObject
     public ClientImpl(VChat ig) throws RemoteException {
         super();
         this.ig = ig;
+        
     }
 
     @Override
     public void nuevoChat(Usuario u) throws RemoteException {
+
         this.ig.actualizarNuevosChats(u);
+
     }
 
     @Override
@@ -30,6 +33,11 @@ public class ClientImpl extends UnicastRemoteObject
     @Override
     public void recibirMensaje(String mensaje, String usuario) throws RemoteException {
         this.ig.recibirMensaje(mensaje, usuario);
+    }
+    
+    @Override
+    public void hayNotificaciones() throws RemoteException {
+        this.ig.haySolicitudes();
     }
 
 }// end CallbackClientImpl class   
