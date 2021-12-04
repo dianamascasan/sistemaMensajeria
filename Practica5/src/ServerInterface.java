@@ -27,6 +27,7 @@ public interface ServerInterface extends Remote {
     public void unregisterForCallback(
             ClientInterface callbackClientObject, Usuario u)
             throws java.rmi.RemoteException;
+        public String cambiarContraseña(String usuario, String claveVieja, String claveNueva) throws java.rmi.RemoteException;
 
     public String verificarUsuario(String usuario, String clave) throws java.rmi.RemoteException;
 

@@ -20,8 +20,7 @@ public class ClientImpl extends UnicastRemoteObject
 
     @Override
     public void nuevoChat(Usuario u) throws RemoteException {
-
-        this.ig.actualizarNuevosChats(u);
+         this.ig.actualizarNuevosChats(u);
 
     }
 

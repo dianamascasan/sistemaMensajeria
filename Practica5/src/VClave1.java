@@ -1,7 +1,4 @@
 
-import java.net.MalformedURLException;
-import java.rmi.Naming;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -11,26 +8,27 @@ import java.util.logging.Logger;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 /**
  *
- * @author diana
+ * @author teres
  */
-public class VClave extends javax.swing.JFrame {
+public class VClave1 extends javax.swing.JDialog {
 
-
-    private ServerInterface serv;
+     private ServerInterface serv;
     private Usuario u;
-
     /**
-     * Creates new form VAutentificacion
+     * Creates new form VClave1
+     * @param parent
+     * @param modal
      * @param u
+     * @param serv
      */
-    public VClave(Usuario u, ServerInterface serv) {
+    public VClave1(java.awt.Frame parent, boolean modal,Usuario u, ServerInterface serv) {
+        super(parent, modal);
         initComponents();
-        this.serv = serv;
+        this.serv=serv;
         this.u=u;
-  
-
     }
 
     /**
@@ -52,12 +50,7 @@ public class VClave extends javax.swing.JFrame {
         jAviso = new javax.swing.JLabel();
         jvieja = new javax.swing.JPasswordField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent evt) {
-                formWindowClosing(evt);
-            }
-        });
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(244, 242, 255));
 
@@ -177,17 +170,11 @@ public class VClave extends javax.swing.JFrame {
             jAviso.setText("Debes cubrir los campos (*)");
         }
 
-
     }//GEN-LAST:event_jcambiarClaveActionPerformed
 
     private void jnuevaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jnuevaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jnuevaActionPerformed
-
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        // TODO add your handling code here:
-        this.dispose();
-    }//GEN-LAST:event_formWindowClosing
 
     private void jviejaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jviejaActionPerformed
         // TODO add your handling code here:
@@ -196,6 +183,7 @@ public class VClave extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jAviso;

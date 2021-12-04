@@ -93,31 +93,38 @@ public class ServerImpl extends UnicastRemoteObject
         for (Usuario us : usuariosConectados.values()) {
             if (us.getNombre().equals(usuarioAmigo)) {
                 us.getInterfaz().nuevoChat(usuariosConectados.get(usuario));
-                for (Usuario u : usuariosConectados.values()) {
-                    {
-                        if (u.getNombre().equals(usuario)) {
-                            us.getInterfaz().nuevoChat(usuariosConectados.get(usuario));
-                        }
-                    }
-                }
+                usuariosConectados.get(usuario).getInterfaz().nuevoChat(us);
+               
             }
         }
-        for (Usuario us : usuariosConectados.values()) {
-            if (us.getNombre().equals(usuario)) {
-                for (Usuario u : usuariosConectados.values()) {
-                    {
-                        if (u.getNombre().equals(usuarioAmigo)) {
-                            us.getInterfaz().nuevoChat(usuariosConectados.get(usuarioAmigo));
-                        }
-                    }
-
-                }
-            }
-
-            // end for
-            System.out.println("********************************\n"
-                    + "Server completed callbacks ---");
-        } // doCallbacks
+//        for (Usuario us : usuariosConectados.values()) {
+//            if (us.getNombre().equals(usuarioAmigo)) {
+//                us.getInterfaz().nuevoChat(usuariosConectados.get(usuario));
+//                for (Usuario u : usuariosConectados.values()) {
+//                    {
+//                        if (u.getNombre().equals(usuario)) {
+//                            us.getInterfaz().nuevoChat(usuariosConectados.get(usuario));
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//        for (Usuario us : usuariosConectados.values()) {
+//            if (us.getNombre().equals(usuario)) {
+//                for (Usuario u : usuariosConectados.values()) {
+//                    {
+//                        if (u.getNombre().equals(usuarioAmigo)) {
+//                            us.getInterfaz().nuevoChat(usuariosConectados.get(usuarioAmigo));
+//                        }
+//                    }
+//
+//                }
+//            }
+//
+//            // end for
+//            System.out.println("********************************\n"
+//                    + "Server completed callbacks ---");
+//        } // doCallbacks
 
     
     }
@@ -203,6 +210,34 @@ public class ServerImpl extends UnicastRemoteObject
                 return rsCategorias.getString("nombre");
 
             }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                stmCategorias.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+
+        }
+        return null;
+
+    }
+    @Override
+    public String cambiarContraseña(String usuario, String claveVieja, String claveNueva) {
+        PreparedStatement stmCategorias = null;
+        try {
+            stmCategorias = conexion.prepareStatement("update usuario set clave=? where nombre=? and clave=crypt(?,clave)");
+            stmCategorias.setString(1, claveNueva);
+            stmCategorias.setString(2, usuario);
+            stmCategorias.setString(3, claveVieja);
+            if(stmCategorias.executeUpdate()!=0){
+                return "Contraseña cambiada correctamente";
+            }else{
+                return "No se pudo cambiar la contraseña";
+            }
+            
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
