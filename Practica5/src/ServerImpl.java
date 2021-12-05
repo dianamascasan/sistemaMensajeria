@@ -94,7 +94,7 @@ public class ServerImpl extends UnicastRemoteObject
             if (us.getNombre().equals(usuarioAmigo)) {
                 us.getInterfaz().nuevoChat(usuariosConectados.get(usuario));
                 usuariosConectados.get(usuario).getInterfaz().nuevoChat(us);
-               
+
             }
         }
 //        for (Usuario us : usuariosConectados.values()) {
@@ -126,21 +126,24 @@ public class ServerImpl extends UnicastRemoteObject
 //                    + "Server completed callbacks ---");
 //        } // doCallbacks
 
-    
     }
+
     private synchronized void desconectado(Usuario u) throws java.rmi.RemoteException {
         // make callback to each registered client
         System.out.println(
                 "**************************************\n"
                 + "Callbacks initiated ---");
-        for (int i = 0; i < clientList.size(); i++) {
-            System.out.println("doing " + i + "-th callback\n");
-            // convert the vector object to a callback object
-            ClientInterface nextClient
-                    = (ClientInterface) clientList.elementAt(i);
-            // invoke the callback method
-            nextClient.borrarChat(u);
-        }// end for
+        for (Usuario us : u.getAmigos().values()) {
+            us.getInterfaz().borrarChat(u);
+        }
+//        for (int i = 0; i < clientList.size(); i++) {
+//            System.out.println("doing " + i + "-th callback\n");
+//            // convert the vector object to a callback object
+//            ClientInterface nextClient
+//                    = (ClientInterface) clientList.elementAt(i);
+//            // invoke the callback method
+//            nextClient.borrarChat(u);
+//        }// end for
         System.out.println("********************************\n"
                 + "Server completed callbacks ---");
     } // doCallbacks
@@ -224,6 +227,7 @@ public class ServerImpl extends UnicastRemoteObject
         return null;
 
     }
+
     @Override
     public String cambiarContraseña(String usuario, String claveVieja, String claveNueva) {
         PreparedStatement stmCategorias = null;
@@ -232,12 +236,11 @@ public class ServerImpl extends UnicastRemoteObject
             stmCategorias.setString(1, claveNueva);
             stmCategorias.setString(2, usuario);
             stmCategorias.setString(3, claveVieja);
-            if(stmCategorias.executeUpdate()!=0){
+            if (stmCategorias.executeUpdate() != 0) {
                 return "Contraseña cambiada correctamente";
-            }else{
+            } else {
                 return "No se pudo cambiar la contraseña";
             }
-            
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -322,68 +325,76 @@ public class ServerImpl extends UnicastRemoteObject
     }
 
     @Override
-    public void aceptarAmistad(String usuario, String usuarioAmigo
-    ) {
+    public boolean aceptarAmistad(String usuario, String usuarioAmigo, String clave) {
         PreparedStatement stmCategorias = null;
-
-        try {
-            stmCategorias = conexion.prepareStatement("UPDATE public.usuarioamigo\n"
-                    + "	SET aceptado=?\n"
-                    + "	WHERE nombreUsuario=? and nombreUsuarioAmigo=?;");
-            stmCategorias.setBoolean(1, true);
-            stmCategorias.setString(2, usuarioAmigo);
-            stmCategorias.setString(3, usuario);
-            stmCategorias.executeUpdate();
-
-            stmCategorias = conexion.prepareStatement("insert into public.usuarioAmigo(nombreUsuario,nombreUsuarioAmigo,aceptado) values(?,?,?)");
-            stmCategorias.setString(1, usuario);
-            stmCategorias.setString(2, usuarioAmigo);
-            stmCategorias.setBoolean(3, true);
-            stmCategorias.executeUpdate();
-            solicitudAceptada(usuario, usuarioAmigo);
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        } catch (RemoteException ex) {
-            Logger.getLogger(ServerImpl.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
+        if (this.verificarUsuario(usuario, clave) != null) {
             try {
-                stmCategorias.close();
-            } catch (SQLException e) {
-                System.out.println("Imposible cerrar cursores");
-            }
 
+                stmCategorias = conexion.prepareStatement("UPDATE public.usuarioamigo\n"
+                        + "	SET aceptado=?\n"
+                        + "	WHERE nombreUsuario=? and nombreUsuarioAmigo=?;");
+                stmCategorias.setBoolean(1, true);
+                stmCategorias.setString(2, usuarioAmigo);
+                stmCategorias.setString(3, usuario);
+                stmCategorias.executeUpdate();
+
+                stmCategorias = conexion.prepareStatement("insert into public.usuarioAmigo(nombreUsuario,nombreUsuarioAmigo,aceptado) values(?,?,?)");
+                stmCategorias.setString(1, usuario);
+                stmCategorias.setString(2, usuarioAmigo);
+                stmCategorias.setBoolean(3, true);
+                stmCategorias.executeUpdate();
+                solicitudAceptada(usuario, usuarioAmigo);
+                return true;
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            } catch (RemoteException ex) {
+                Logger.getLogger(ServerImpl.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                try {
+                    stmCategorias.close();
+                } catch (SQLException e) {
+                    System.out.println("Imposible cerrar cursores");
+                }
+
+            }
+        } else {
+            return false;
         }
+        return false;
     }
 
     @Override
-    public void solicitarAmistad(String usuario, String usuarioAmigo) throws RemoteException {
+    public boolean solicitarAmistad(String usuario, String usuarioAmigo, String clave) throws RemoteException {
         PreparedStatement stmCategorias = null;
-
-        try {
-
-            stmCategorias = conexion.prepareStatement("insert into public.usuarioAmigo(nombreUsuario,nombreUsuarioAmigo,aceptado) values(?,?,?)");
-            stmCategorias.setString(1, usuario);
-            stmCategorias.setString(2, usuarioAmigo);
-            stmCategorias.setBoolean(3, false);
-            stmCategorias.executeUpdate();
-
-            for (Usuario u : usuariosConectados.values()) {
-                if (u.getNombre().equals(usuarioAmigo)) {
-                    avisarNotificaciones(usuariosConectados.get(usuarioAmigo));
-                }
-            }
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        } finally {
+        if (this.verificarUsuario(usuario, clave) != null) {
             try {
-                stmCategorias.close();
-            } catch (SQLException e) {
-                System.out.println("Imposible cerrar cursores");
-            }
 
+                stmCategorias = conexion.prepareStatement("insert into public.usuarioAmigo(nombreUsuario,nombreUsuarioAmigo,aceptado) values(?,?,?)");
+                stmCategorias.setString(1, usuario);
+                stmCategorias.setString(2, usuarioAmigo);
+                stmCategorias.setBoolean(3, false);
+                stmCategorias.executeUpdate();
+
+                for (Usuario u : usuariosConectados.values()) {
+                    if (u.getNombre().equals(usuarioAmigo)) {
+                        avisarNotificaciones(usuariosConectados.get(usuarioAmigo));
+                    }
+                }
+                return true;
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            } finally {
+                try {
+                    stmCategorias.close();
+                } catch (SQLException e) {
+                    System.out.println("Imposible cerrar cursores");
+                }
+
+            }
+        } else {
+            return false;
         }
+        return false;
     }
 
     @Override
@@ -413,35 +424,36 @@ public class ServerImpl extends UnicastRemoteObject
 
     }
 
-    public HashMap<String, Usuario> buscarAmigos(Usuario usuario) {
+    public HashMap<String, Usuario> buscarAmigos(Usuario usuario, String clave) {
         PreparedStatement stmCategorias = null;
         HashMap<String, Usuario> amigos = new HashMap<>();
-        try {
-            stmCategorias = conexion.prepareStatement("select nombreusuarioamigo from public.usuarioamigo where nombreusuario=? and aceptado=true");
-            stmCategorias.setString(1, usuario.getNombre());
+        if (this.verificarUsuario(usuario.getNombre(), clave) != null) {
+            try {
+                stmCategorias = conexion.prepareStatement("select nombreusuarioamigo from public.usuarioamigo where nombreusuario=? and aceptado=true");
+                stmCategorias.setString(1, usuario.getNombre());
 
-            ResultSet rsCategorias = stmCategorias.executeQuery();
-            while (rsCategorias.next()) {
-                String u = rsCategorias.getString("nombreusuarioamigo");
-                for (String nombre : usuariosConectados.keySet()) {
-                    if (nombre.equals(u)) {
-                        System.out.println(nombre);
-                        //usuario.setAmigos(usuariosConectados.get(nombre));
-                        amigos.put(usuariosConectados.get(nombre).getNombre(), usuariosConectados.get(nombre));
+                ResultSet rsCategorias = stmCategorias.executeQuery();
+                while (rsCategorias.next()) {
+                    String u = rsCategorias.getString("nombreusuarioamigo");
+                    for (String nombre : usuariosConectados.keySet()) {
+                        if (nombre.equals(u)) {
+                            System.out.println(nombre);
+                            //usuario.setAmigos(usuariosConectados.get(nombre));
+                            amigos.put(usuariosConectados.get(nombre).getNombre(), usuariosConectados.get(nombre));
+                        }
                     }
+
+                }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            } finally {
+                try {
+                    stmCategorias.close();
+                } catch (SQLException e) {
+                    System.out.println("Imposible cerrar cursores");
                 }
 
             }
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        } finally {
-            try {
-                stmCategorias.close();
-            } catch (SQLException e) {
-                System.out.println("Imposible cerrar cursores");
-            }
-
         }
         return amigos;
 

@@ -186,7 +186,7 @@ public class VAutentificacion extends javax.swing.JFrame {
                     // register for callback
                     Usuario usuario = new Usuario(nombre,callbackObj);
 
-                    for (Usuario u : h.buscarAmigos(usuario).values()) {
+                    for (Usuario u : h.buscarAmigos(usuario,jClave.getText()).values()) {
                         usuario.setAmigos(u);
                     }
                     h.registerForCallback(callbackObj, usuario);

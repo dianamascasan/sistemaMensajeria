@@ -58,7 +58,10 @@ public class VSolicitudes extends javax.swing.JDialog {
         jpendientes = new javax.swing.JTable();
         anadirAmigo = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
+        jTexto = new javax.swing.JLabel();
         jSolicitar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jClave = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -129,16 +132,24 @@ public class VSolicitudes extends javax.swing.JDialog {
         jLabel9.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
         jLabel9.setText("TUS SOLICITUDES:");
 
+        jTexto.setForeground(new java.awt.Color(204, 0, 51));
+        jTexto.setText("Debe introducir su clave");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(anadirAmigo, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9)
+                            .addComponent(anadirAmigo, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(jTexto)))
                 .addContainerGap(32, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -150,7 +161,9 @@ public class VSolicitudes extends javax.swing.JDialog {
                 .addComponent(anadirAmigo, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addGap(28, 28, 28)
+                .addComponent(jTexto)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jSolicitar.setBackground(new java.awt.Color(255, 219, 239));
@@ -162,25 +175,44 @@ public class VSolicitudes extends javax.swing.JDialog {
             }
         });
 
+        jLabel1.setText("Clave:");
+
+        jClave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jClaveActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jSolicitar))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jScrollPane1)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                        .addContainerGap()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel10)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jSolicitar)
+                                .addGap(17, 17, 17))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addComponent(jScrollPane1)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(jBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING))
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jClave)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -201,10 +233,12 @@ public class VSolicitudes extends javax.swing.JDialog {
                     .addComponent(jBuscar, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(23, 23, 23)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jClave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(35, Short.MAX_VALUE))
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -215,9 +249,7 @@ public class VSolicitudes extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -236,6 +268,7 @@ public class VSolicitudes extends javax.swing.JDialog {
                 for (String nombre : usuarios) {
                     tablaUsuarios.anadirFila(nombre);
                 }
+                jSolicitar.setEnabled(false);
             } catch (RemoteException ex) {
                 Logger.getLogger(VSolicitudes.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -249,8 +282,13 @@ public class VSolicitudes extends javax.swing.JDialog {
         solicitudesUsuario = (ModeloTablaUsuarios) jpendientes.getModel();
 
         try {
-            serv.aceptarAmistad(usuario.getNombre(), (String) solicitudesUsuario.getValueAt(jpendientes.getSelectedRow(), 0));
-            solicitudesUsuario.borrarFila(jpendientes.getSelectedRow());
+            if (serv.aceptarAmistad(usuario.getNombre(), (String) solicitudesUsuario.getValueAt(jpendientes.getSelectedRow(), 0), jClave.getText())) {
+                solicitudesUsuario.borrarFila(jpendientes.getSelectedRow());
+                anadirAmigo.setEnabled(false);
+            }else{
+                jTexto.setText("Clave incorrecta");
+            }
+
         } catch (RemoteException ex) {
             Logger.getLogger(VSolicitudes.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -275,8 +313,9 @@ public class VSolicitudes extends javax.swing.JDialog {
         ModeloTablaUsuarios solicitudesUsuario;
         solicitudesUsuario = (ModeloTablaUsuarios) jTablaUsuarios.getModel();
         try {
-            serv.solicitarAmistad(usuario.getNombre(), (String) solicitudesUsuario.getValueAt(jTablaUsuarios.getSelectedRow(), 0));
-            serv.buscarUsuario(jBuscarNombre.getText(), usuario.getNombre());
+            if(serv.solicitarAmistad(usuario.getNombre(), (String) solicitudesUsuario.getValueAt(jTablaUsuarios.getSelectedRow(), 0), jClave.getText())){
+            //serv.buscarUsuario(jBuscarNombre.getText(), usuario.getNombre());
+
             ModeloTablaUsuarios tablaUsuarios;
             tablaUsuarios = (ModeloTablaUsuarios) jTablaUsuarios.getModel();
             if (tablaUsuarios.getRowCount() > 0) {
@@ -287,6 +326,10 @@ public class VSolicitudes extends javax.swing.JDialog {
 
                 tablaUsuarios.anadirFila(nombre);
             }
+            jSolicitar.setEnabled(false);
+            }else{
+                jTexto.setText("Clave incorrecta");
+            }
         } catch (RemoteException ex) {
             Logger.getLogger(VSolicitudes.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -294,13 +337,17 @@ public class VSolicitudes extends javax.swing.JDialog {
 
     private void jTablaUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTablaUsuariosMouseClicked
         // TODO add your handling code here:
-        jSolicitar.setEnabled(true);
+        if (!jClave.getText().isEmpty()) {
+            jSolicitar.setEnabled(true);
+        }
 
     }//GEN-LAST:event_jTablaUsuariosMouseClicked
 
     private void jpendientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpendientesMouseClicked
         // TODO add your handling code here:
-        anadirAmigo.setEnabled(true);
+        if (!jClave.getText().isEmpty()) {
+            anadirAmigo.setEnabled(true);
+        }
     }//GEN-LAST:event_jpendientesMouseClicked
 
     private void jpendientesKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jpendientesKeyReleased
@@ -308,11 +355,17 @@ public class VSolicitudes extends javax.swing.JDialog {
 
     }//GEN-LAST:event_jpendientesKeyReleased
 
+    private void jClaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jClaveActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jClaveActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton anadirAmigo;
     private javax.swing.JButton jBuscar;
     private javax.swing.JTextPane jBuscarNombre;
+    private javax.swing.JPasswordField jClave;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
@@ -323,6 +376,7 @@ public class VSolicitudes extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JButton jSolicitar;
     private javax.swing.JTable jTablaUsuarios;
+    private javax.swing.JLabel jTexto;
     private javax.swing.JTable jpendientes;
     // End of variables declaration//GEN-END:variables
     public void actualizarTablita() throws RemoteException {

@@ -26,7 +26,7 @@ public class VChat extends javax.swing.JDialog {
 
     public VChat(java.awt.Frame padre, ServerInterface serv) {
         super(padre);
-
+       
         initComponents();
         this.amigoChat = null;
         this.padre = (VAutentificacion) padre;
@@ -479,6 +479,7 @@ public class VChat extends javax.swing.JDialog {
 
         chats = (ModeloTablaUsuarios) jTablaAmigos.getModel();
         chats.borrarTabla();
+        System.out.println(usuario.getAmigos().keySet());
         chats.setFilas(usuario.getAmigos().keySet());
 
     }

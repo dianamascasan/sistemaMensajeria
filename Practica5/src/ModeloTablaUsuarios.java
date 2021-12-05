@@ -68,7 +68,7 @@ public class ModeloTablaUsuarios extends AbstractTableModel {
 
     public void setFilas(java.util.Set<String> usuarios) {
         this.usuario.clear();
-        for (String aux : usuario) {
+        for (String aux : usuarios) {
             this.usuario.add(aux);
         }
         fireTableDataChanged();
