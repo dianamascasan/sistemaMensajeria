@@ -22,6 +22,7 @@ public class VChat extends javax.swing.JDialog {
     private VAutentificacion padre;
     private ServerInterface serv;
     private Usuario amigoChat;
+    private VSolicitudes sol;
 
     public VChat(java.awt.Frame padre, ServerInterface serv) {
         super(padre);
@@ -35,8 +36,11 @@ public class VChat extends javax.swing.JDialog {
 
     }
     
-    public final void haySolicitudes() {
+    public final void haySolicitudes() throws RemoteException {
         this.jnotificacion.setText("!!!!!");
+        if(this.sol!=null){
+            this.sol.actualizarTablita();
+        }
     }
     
     public final void noHaySolicitudes() {
@@ -359,7 +363,7 @@ public class VChat extends javax.swing.JDialog {
 
     private void solicitudesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_solicitudesActionPerformed
         // TODO add your handling code here:
-        VSolicitudes sol;
+        
         try {
             sol = new VSolicitudes(this, usuario, serv);
             sol.setVisible(true);

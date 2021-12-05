@@ -32,12 +32,7 @@ public class VSolicitudes extends javax.swing.JDialog {
         this.serv = serv;
         anadirAmigo.setEnabled(false);
         jSolicitar.setEnabled(false);
-        ModeloTablaUsuarios solicitudesUsuario;
-        solicitudesUsuario = (ModeloTablaUsuarios) jpendientes.getModel();
-        solicitudes = serv.solicitudesAmistad(usuario.getNombre());
-        for (String nombre : solicitudes) {
-            solicitudesUsuario.anadirFila(nombre);
-        }
+        actualizarTablita();
 
     }
 
@@ -230,7 +225,7 @@ public class VSolicitudes extends javax.swing.JDialog {
 
     private void jBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBuscarActionPerformed
         // TODO add your handling code here:
-        if (jBuscarNombre.getText().length() >= 3 ) {
+        if (jBuscarNombre.getText().length() >= 3) {
             try {
                 ModeloTablaUsuarios tablaUsuarios;
                 tablaUsuarios = (ModeloTablaUsuarios) jTablaUsuarios.getModel();
@@ -249,10 +244,10 @@ public class VSolicitudes extends javax.swing.JDialog {
 
     private void anadirAmigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anadirAmigoActionPerformed
         // TODO add your handling code here:
-        
+
         ModeloTablaUsuarios solicitudesUsuario;
         solicitudesUsuario = (ModeloTablaUsuarios) jpendientes.getModel();
-       
+
         try {
             serv.aceptarAmistad(usuario.getNombre(), (String) solicitudesUsuario.getValueAt(jpendientes.getSelectedRow(), 0));
             solicitudesUsuario.borrarFila(jpendientes.getSelectedRow());
@@ -310,7 +305,7 @@ public class VSolicitudes extends javax.swing.JDialog {
 
     private void jpendientesKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jpendientesKeyReleased
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_jpendientesKeyReleased
 
 
@@ -330,4 +325,16 @@ public class VSolicitudes extends javax.swing.JDialog {
     private javax.swing.JTable jTablaUsuarios;
     private javax.swing.JTable jpendientes;
     // End of variables declaration//GEN-END:variables
+    public void actualizarTablita() throws RemoteException {
+        ModeloTablaUsuarios solicitudesUsuario;
+        solicitudesUsuario = (ModeloTablaUsuarios) jpendientes.getModel();
+        solicitudes = serv.solicitudesAmistad(usuario.getNombre());
+        if (solicitudesUsuario.getRowCount() > 0) {
+            solicitudesUsuario.borrarTabla();
+        }
+        for (String nombre : solicitudes) {
+            solicitudesUsuario.anadirFila(nombre);
+        }
+    }
+
 }
