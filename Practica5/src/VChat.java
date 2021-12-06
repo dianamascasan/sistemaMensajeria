@@ -1,5 +1,6 @@
 
 import java.rmi.RemoteException;
+import java.util.HashMap;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,19 +19,23 @@ public class VChat extends javax.swing.JDialog {
     /**
      * Creates new form VChat
      */
-    private Usuario usuario;
+    private String nombre;
+    private HashMap<String, Amigo> amigos;
     private VAutentificacion padre;
     private ServerInterface serv;
-    private Usuario amigoChat;
+    private Amigo amigoChat;
     private VSolicitudes sol;
 
-    public VChat(java.awt.Frame padre, ServerInterface serv) {
+    public VChat(java.awt.Frame padre, ServerInterface serv, String nombre) {
         super(padre);
        
         initComponents();
         this.amigoChat = null;
         this.padre = (VAutentificacion) padre;
         this.serv = serv;
+        this.nombre=nombre;
+        this.amigos=new HashMap<>();
+        saludoCliente.setText("¡Hola " + nombre.toUpperCase() + "!");
         enviar.setEnabled(false);
         
 
@@ -47,26 +52,26 @@ public class VChat extends javax.swing.JDialog {
         this.jnotificacion.setText("");
     }
 
-    public void comprobarNotificaciones(Usuario usuario) throws RemoteException {
+    public void comprobarNotificaciones(String usuario) throws RemoteException {
         
-        if (serv.solicitudesAmistad(usuario.getNombre()).isEmpty()) {
+        if (serv.solicitudesAmistad(usuario).isEmpty()) {
             this.noHaySolicitudes();
         }
         else {
             this.haySolicitudes();
         }
     }
-    public void setUsuario(Usuario usuario) throws RemoteException {
-        this.usuario = usuario;
-        saludoCliente.setText("¡Hola " + usuario.getNombre().toUpperCase() + "!");
+    public void setAmigos(HashMap<String,Amigo> amigos) throws RemoteException {
+        this.amigos = amigos;
+        
         ModeloTablaUsuarios chats;
         chats = (ModeloTablaUsuarios) jTablaAmigos.getModel();
 
-        for (String nombre : usuario.getAmigos().keySet()) {
+        for (String nombre : amigos.keySet()) {
             chats.anadirFila(nombre);
 
         }
-        comprobarNotificaciones(usuario);
+        comprobarNotificaciones(nombre);
     }
 
     /**
@@ -339,16 +344,16 @@ public class VChat extends javax.swing.JDialog {
 
     private void enviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enviarActionPerformed
         // TODO add your handling code here:
-        jChat.append(usuario.getNombre() + ":  " + jMensajeEnviar.getText() + "\n");
+        jChat.append(nombre + ":  " + jMensajeEnviar.getText() + "\n");
         try {
-            amigoChat.getInterfaz().recibirMensaje(usuario.getNombre() + ":  " + jMensajeEnviar.getText() + "\n", usuario.getNombre());
-            amigoChat.setConversacion(usuario.getNombre() + ":  " + jMensajeEnviar.getText() + "\n");
+            amigoChat.getInterfaz().recibirMensaje(nombre + ":  " + jMensajeEnviar.getText() + "\n", nombre);
+            amigoChat.setConversacion(nombre + ":  " + jMensajeEnviar.getText() + "\n");
         } catch (RemoteException ex) {
             Logger.getLogger(VChat.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_enviarActionPerformed
     public void recibirMensaje(String mensaje, String nombreU) {
-        usuario.getAmigos().get(nombreU).setConversacion(mensaje);
+        amigos.get(nombreU).setConversacion(mensaje);
 
         this.mostrarMensaje(mensaje, nombreU);
     }
@@ -365,7 +370,7 @@ public class VChat extends javax.swing.JDialog {
         // TODO add your handling code here:
         
         try {
-            sol = new VSolicitudes(this, usuario, serv);
+            sol = new VSolicitudes(this, nombre, serv);
             sol.setVisible(true);
         } catch (RemoteException ex) {
             Logger.getLogger(VChat.class.getName()).log(Level.SEVERE, null, ex);
@@ -376,7 +381,7 @@ public class VChat extends javax.swing.JDialog {
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         try {
-            this.serv.unregisterForCallback(usuario.getInterfaz(), usuario);
+            this.serv.unregisterForCallback(nombre);
             this.dispose();
         } catch (RemoteException ex) {
             Logger.getLogger(VChat.class.getName()).log(Level.SEVERE, null, ex);
@@ -388,7 +393,7 @@ public class VChat extends javax.swing.JDialog {
 
         ModeloTablaUsuarios amigosUsuario;
         amigosUsuario = (ModeloTablaUsuarios) jTablaAmigos.getModel();
-        this.amigoChat = usuario.getAmigos().get((String) amigosUsuario.getValueAt(jTablaAmigos.getSelectedRow(), 0));
+        this.amigoChat = amigos.get((String) amigosUsuario.getValueAt(jTablaAmigos.getSelectedRow(), 0));
         jchatear.setText("Chatea con " + amigoChat.getNombre().toUpperCase());
         jChat.setText("");
         this.mostrarMensaje(amigoChat.getConversacion(), amigoChat.getNombre());
@@ -409,7 +414,7 @@ public class VChat extends javax.swing.JDialog {
     }//GEN-LAST:event_jMensajeEnviarKeyReleased
 
     private void jcambiarClaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcambiarClaveActionPerformed
-       VClave1 clave1 = new VClave1(this.padre,true,usuario, serv);
+       VClave1 clave1 = new VClave1(this.padre,true, nombre, serv);
        clave1.setVisible(true);
        
     }//GEN-LAST:event_jcambiarClaveActionPerformed
@@ -417,11 +422,11 @@ public class VChat extends javax.swing.JDialog {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
 
-        jChat.append(usuario.getNombre() + ":  " + "👋" + "\n");
+        jChat.append( nombre + ":  " + "👋" + "\n");
 
         try {
-            amigoChat.getInterfaz().recibirMensaje(usuario.getNombre() + ":  " + "👋" + "\n", usuario.getNombre());
-            amigoChat.setConversacion(usuario.getNombre() + ":  " + "👋" + "\n");
+            amigoChat.getInterfaz().recibirMensaje(nombre + ":  " + "👋" + "\n", nombre);
+            amigoChat.setConversacion( nombre + ":  " + "👋" + "\n");
         } catch (RemoteException ex) {
             Logger.getLogger(VChat.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -430,11 +435,11 @@ public class VChat extends javax.swing.JDialog {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
 
-        jChat.append(usuario.getNombre() + ":  " + "✨" + "\n");
+        jChat.append( nombre + ":  " + "✨" + "\n");
 
         try {
-            amigoChat.getInterfaz().recibirMensaje(usuario.getNombre() + ":  " + "✨" + "\n", usuario.getNombre());
-            amigoChat.setConversacion(usuario.getNombre() + ":  " + "✨" + "\n");
+            amigoChat.getInterfaz().recibirMensaje( nombre + ":  " + "✨" + "\n",  nombre);
+            amigoChat.setConversacion( nombre + ":  " + "✨" + "\n");
         } catch (RemoteException ex) {
             Logger.getLogger(VChat.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -442,11 +447,11 @@ public class VChat extends javax.swing.JDialog {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        jChat.append(usuario.getNombre() + ":  " + "🎉" + "\n");
+        jChat.append( nombre + ":  " + "🎉" + "\n");
 
         try {
-            amigoChat.getInterfaz().recibirMensaje(usuario.getNombre() + ":  " + "🎉" + "\n", usuario.getNombre());
-            amigoChat.setConversacion(usuario.getNombre() + ":  " + "🎉" + "\n");
+            amigoChat.getInterfaz().recibirMensaje( nombre + ":  " + "🎉" + "\n",  nombre);
+            amigoChat.setConversacion( nombre + ":  " + "🎉" + "\n");
         } catch (RemoteException ex) {
             Logger.getLogger(VChat.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -454,33 +459,34 @@ public class VChat extends javax.swing.JDialog {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-         jChat.append(usuario.getNombre() + ":  " + "❤" + "\n");
+         jChat.append( nombre + ":  " + "❤" + "\n");
 
         try {
-            amigoChat.getInterfaz().recibirMensaje(usuario.getNombre() + ":  " + "❤" + "\n", usuario.getNombre());
-            amigoChat.setConversacion(usuario.getNombre() + ":  " + "❤" + "\n");
+            amigoChat.getInterfaz().recibirMensaje( nombre + ":  " + "❤" + "\n",  nombre);
+            amigoChat.setConversacion( nombre + ":  " + "❤" + "\n");
         } catch (RemoteException ex) {
             Logger.getLogger(VChat.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton5ActionPerformed
 
-    public void actualizarNuevosChats(Usuario u) throws RemoteException {
-        usuario.setAmigos(u);
+    public void actualizarNuevosChats(Amigo u) throws RemoteException {
+        amigos.put(u.getNombre(), u);
+        System.out.println(u.getNombre());
         ModeloTablaUsuarios chats;
         chats = (ModeloTablaUsuarios) jTablaAmigos.getModel();
         chats.anadirFila(u.getNombre());
 
     }
 
-    public void borrarChats(Usuario u) throws RemoteException {
+    public void borrarChats(String u) throws RemoteException {
 
-        usuario.borrarAmigos(u);
+        this.amigos.remove(u);
         ModeloTablaUsuarios chats;
 
         chats = (ModeloTablaUsuarios) jTablaAmigos.getModel();
         chats.borrarTabla();
-        System.out.println(usuario.getAmigos().keySet());
-        chats.setFilas(usuario.getAmigos().keySet());
+        
+        chats.setFilas(this.amigos.keySet());
 
     }
 

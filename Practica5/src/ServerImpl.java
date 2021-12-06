@@ -22,13 +22,13 @@ import java.util.logging.Logger;
 public class ServerImpl extends UnicastRemoteObject
         implements ServerInterface {
 
-    private Vector clientList;
+    //private Vector clientList;
     private java.sql.Connection conexion;
     private HashMap<String, Usuario> usuariosConectados;
 
     public ServerImpl() throws RemoteException {
         super();
-        clientList = new Vector();
+        //clientList = new Vector();
         conexion();
         this.usuariosConectados = new HashMap<>();
     }
@@ -40,17 +40,21 @@ public class ServerImpl extends UnicastRemoteObject
     }
 
     @Override
-    public synchronized void registerForCallback(
+    public synchronized boolean registerForCallback(
             ClientInterface callbackClientObject, Usuario u)
             throws java.rmi.RemoteException {
         // store the callback object into the vector
-        if (!(clientList.contains(callbackClientObject))) {
-            clientList.addElement(callbackClientObject);
-            System.out.println("Registered new client ");
-
-        }
-        this.usuariosConectados.put(u.getNombre(), u);
-        conectado(u);
+//        if (!(clientList.contains(callbackClientObject))) {
+//            clientList.addElement(callbackClientObject);
+//            System.out.println("Registered new client ");
+//
+//        }
+        if(!this.usuariosConectados.keySet().contains(u.getNombre())){
+            this.usuariosConectados.put(u.getNombre(), u);
+            return true;
+        }return false;
+        
+        
     }
 
 // This remote method allows an object client to 
@@ -58,17 +62,16 @@ public class ServerImpl extends UnicastRemoteObject
 // @param id is an ID for the client; to be used by
 // the server to uniquely identify the registered client.
     @Override
-    public synchronized void unregisterForCallback(
-            ClientInterface callbackClientObject, Usuario u)
+    public synchronized void unregisterForCallback(String nombre)
             throws java.rmi.RemoteException {
-        if (clientList.removeElement(callbackClientObject)) {
-            System.out.println("Unregistered client ");
-        } else {
-            System.out.println(
-                    "unregister: clientwasn't registered.");
-        }
-        desconectado(u);
-        this.usuariosConectados.remove(u.getNombre());
+//        if (clientList.removeElement(callbackClientObject)) {
+//            System.out.println("Unregistered client ");
+//        } else {
+//            System.out.println(
+//                    "unregister: clientwasn't registered.");
+//        }
+        desconectado(nombre);
+        this.usuariosConectados.remove(nombre);
     }
 
     private synchronized void conectado(Usuario u) throws java.rmi.RemoteException {
@@ -77,7 +80,8 @@ public class ServerImpl extends UnicastRemoteObject
                 "**************************************\n"
                 + "Callbacks initiated ---");
         for (Usuario us : u.getAmigos().values()) {
-            us.getInterfaz().nuevoChat(u);
+            System.out.println(us.getNombre());
+            us.getInterfaz().nuevoChat(new Amigo(usuariosConectados.get(u.getNombre()).getInterfaz2(),u.getNombre()));
         }
 
         // end for
@@ -92,8 +96,8 @@ public class ServerImpl extends UnicastRemoteObject
                 + "Callbacks initiated ---");
         for (Usuario us : usuariosConectados.values()) {
             if (us.getNombre().equals(usuarioAmigo)) {
-                us.getInterfaz().nuevoChat(usuariosConectados.get(usuario));
-                usuariosConectados.get(usuario).getInterfaz().nuevoChat(us);
+                us.getInterfaz().nuevoChat(new Amigo(usuariosConectados.get(usuario).getInterfaz2(),usuario));
+                usuariosConectados.get(usuario).getInterfaz().nuevoChat(new Amigo(usuariosConectados.get(usuarioAmigo).getInterfaz2(),usuarioAmigo));
 
             }
         }
@@ -128,22 +132,14 @@ public class ServerImpl extends UnicastRemoteObject
 
     }
 
-    private synchronized void desconectado(Usuario u) throws java.rmi.RemoteException {
+    private synchronized void desconectado(String u) throws java.rmi.RemoteException {
         // make callback to each registered client
         System.out.println(
                 "**************************************\n"
                 + "Callbacks initiated ---");
-        for (Usuario us : u.getAmigos().values()) {
+        for (Usuario us : this.usuariosConectados.get(u).getAmigos().values()) {
             us.getInterfaz().borrarChat(u);
         }
-//        for (int i = 0; i < clientList.size(); i++) {
-//            System.out.println("doing " + i + "-th callback\n");
-//            // convert the vector object to a callback object
-//            ClientInterface nextClient
-//                    = (ClientInterface) clientList.elementAt(i);
-//            // invoke the callback method
-//            nextClient.borrarChat(u);
-//        }// end for
         System.out.println("********************************\n"
                 + "Server completed callbacks ---");
     } // doCallbacks
@@ -424,26 +420,27 @@ public class ServerImpl extends UnicastRemoteObject
 
     }
 
-    public HashMap<String, Usuario> buscarAmigos(Usuario usuario, String clave) {
+    public HashMap<String, Amigo> buscarAmigos(String usuario, String clave) throws RemoteException {
         PreparedStatement stmCategorias = null;
-        HashMap<String, Usuario> amigos = new HashMap<>();
-        if (this.verificarUsuario(usuario.getNombre(), clave) != null) {
+        HashMap<String, Amigo> amigos = new HashMap<>();
+        if (this.verificarUsuario(usuario, clave) != null) {
             try {
                 stmCategorias = conexion.prepareStatement("select nombreusuarioamigo from public.usuarioamigo where nombreusuario=? and aceptado=true");
-                stmCategorias.setString(1, usuario.getNombre());
+                stmCategorias.setString(1, usuario);
 
                 ResultSet rsCategorias = stmCategorias.executeQuery();
                 while (rsCategorias.next()) {
                     String u = rsCategorias.getString("nombreusuarioamigo");
-                    for (String nombre : usuariosConectados.keySet()) {
-                        if (nombre.equals(u)) {
-                            System.out.println(nombre);
-                            //usuario.setAmigos(usuariosConectados.get(nombre));
-                            amigos.put(usuariosConectados.get(nombre).getNombre(), usuariosConectados.get(nombre));
+                    for (String nombreAmigo : usuariosConectados.keySet()) {
+                        if (nombreAmigo.equals(u)) {
+                            //System.out.println(nombre);
+                            this.usuariosConectados.get(usuario).setAmigos(usuariosConectados.get(nombreAmigo));
+                            amigos.put(usuariosConectados.get(nombreAmigo).getNombre(), new Amigo(usuariosConectados.get(nombreAmigo).getInterfaz2(), nombreAmigo));
                         }
                     }
 
                 }
+                conectado(this.usuariosConectados.get(usuario));
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
             } finally {

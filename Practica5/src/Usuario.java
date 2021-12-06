@@ -17,22 +17,23 @@ public class Usuario implements Serializable  {
     
     private HashMap<String, Usuario> amigos;
     private ClientInterface interfaz;
-    private String conversacion;
-
-    public Usuario(String nombre,ClientInterface interfaz) {
+    private Client2Interface interfaz2;
+    
+    public Usuario(String nombre,ClientInterface interfaz, Client2Interface interfaz2) {
         this.nombre = nombre;
-        this.conversacion="";
+        
         this.amigos= new HashMap<>();
         this.interfaz=interfaz;
+        this.interfaz2=interfaz2;
     }
 
-    public String getConversacion() {
-        return conversacion;
+    public Client2Interface getInterfaz2() {
+        return interfaz2;
     }
 
-    public void setConversacion(String conversacion) {
-        this.conversacion += conversacion;
-    }
+   
+
+    
 
     public ClientInterface getInterfaz() {
         return interfaz;

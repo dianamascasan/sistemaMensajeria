@@ -18,12 +18,12 @@ public class VSolicitudes extends javax.swing.JDialog {
     /**
      * Creates new form VSolicitudes
      */
-    public Usuario usuario;
+    public String usuario;
     public VChat padre;
     private ArrayList<String> solicitudes;
     private ServerInterface serv;
 
-    public VSolicitudes(VChat padre, Usuario usuario, ServerInterface serv) throws RemoteException {
+    public VSolicitudes(VChat padre, String usuario, ServerInterface serv) throws RemoteException {
         super(padre);
         initComponents();
         this.usuario = usuario;
@@ -264,7 +264,7 @@ public class VSolicitudes extends javax.swing.JDialog {
                 if (tablaUsuarios.getRowCount() > 0) {
                     tablaUsuarios.borrarTabla();
                 }
-                ArrayList<String> usuarios = this.serv.buscarUsuario(jBuscarNombre.getText(), usuario.getNombre());
+                ArrayList<String> usuarios = this.serv.buscarUsuario(jBuscarNombre.getText(), usuario);
                 for (String nombre : usuarios) {
                     tablaUsuarios.anadirFila(nombre);
                 }
@@ -282,7 +282,7 @@ public class VSolicitudes extends javax.swing.JDialog {
         solicitudesUsuario = (ModeloTablaUsuarios) jpendientes.getModel();
 
         try {
-            if (serv.aceptarAmistad(usuario.getNombre(), (String) solicitudesUsuario.getValueAt(jpendientes.getSelectedRow(), 0), jClave.getText())) {
+            if (serv.aceptarAmistad(usuario, (String) solicitudesUsuario.getValueAt(jpendientes.getSelectedRow(), 0), jClave.getText())) {
                 solicitudesUsuario.borrarFila(jpendientes.getSelectedRow());
                 anadirAmigo.setEnabled(false);
             }else{
@@ -313,7 +313,7 @@ public class VSolicitudes extends javax.swing.JDialog {
         ModeloTablaUsuarios solicitudesUsuario;
         solicitudesUsuario = (ModeloTablaUsuarios) jTablaUsuarios.getModel();
         try {
-            if(serv.solicitarAmistad(usuario.getNombre(), (String) solicitudesUsuario.getValueAt(jTablaUsuarios.getSelectedRow(), 0), jClave.getText())){
+            if(serv.solicitarAmistad(usuario, (String) solicitudesUsuario.getValueAt(jTablaUsuarios.getSelectedRow(), 0), jClave.getText())){
             //serv.buscarUsuario(jBuscarNombre.getText(), usuario.getNombre());
 
             ModeloTablaUsuarios tablaUsuarios;
@@ -321,7 +321,7 @@ public class VSolicitudes extends javax.swing.JDialog {
             if (tablaUsuarios.getRowCount() > 0) {
                 tablaUsuarios.borrarTabla();
             }
-            ArrayList<String> usuarios = this.serv.buscarUsuario(jBuscarNombre.getText(), usuario.getNombre());
+            ArrayList<String> usuarios = this.serv.buscarUsuario(jBuscarNombre.getText(), usuario);
             for (String nombre : usuarios) {
 
                 tablaUsuarios.anadirFila(nombre);
@@ -382,7 +382,7 @@ public class VSolicitudes extends javax.swing.JDialog {
     public void actualizarTablita() throws RemoteException {
         ModeloTablaUsuarios solicitudesUsuario;
         solicitudesUsuario = (ModeloTablaUsuarios) jpendientes.getModel();
-        solicitudes = serv.solicitudesAmistad(usuario.getNombre());
+        solicitudes = serv.solicitudesAmistad(usuario);
         if (solicitudesUsuario.getRowCount() > 0) {
             solicitudesUsuario.borrarTabla();
         }

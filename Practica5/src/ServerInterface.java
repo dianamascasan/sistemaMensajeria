@@ -18,20 +18,19 @@ public interface ServerInterface extends Remote {
 // @param callbackClientObject is a reference to the
 //        object of the client; to be used by the server
 //        to make its callbacks.
-    public void registerForCallback(
+    public boolean registerForCallback(
             ClientInterface callbackClientObject, Usuario u
     ) throws java.rmi.RemoteException;
 
 // This remote method allows an object client to 
 // cancel its registration for callback
-    public void unregisterForCallback(
-            ClientInterface callbackClientObject, Usuario u)
+    public void unregisterForCallback(String u)
             throws java.rmi.RemoteException;
         public String cambiarContraseña(String usuario, String claveVieja, String claveNueva) throws java.rmi.RemoteException;
 
     public String verificarUsuario(String usuario, String clave) throws java.rmi.RemoteException;
 
-    public HashMap<String, Usuario> buscarAmigos(Usuario usuario,String clave) throws java.rmi.RemoteException;
+    public HashMap<String, Amigo> buscarAmigos(String usuario,String clave) throws java.rmi.RemoteException;
 
     public boolean usuarioYaExiste(String usuario) throws java.rmi.RemoteException;
 

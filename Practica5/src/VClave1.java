@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 public class VClave1 extends javax.swing.JDialog {
 
      private ServerInterface serv;
-    private Usuario u;
+    private String u;
     /**
      * Creates new form VClave1
      * @param parent
@@ -24,7 +24,7 @@ public class VClave1 extends javax.swing.JDialog {
      * @param u
      * @param serv
      */
-    public VClave1(java.awt.Frame parent, boolean modal,Usuario u, ServerInterface serv) {
+    public VClave1(java.awt.Frame parent, boolean modal,String u, ServerInterface serv) {
         super(parent, modal);
         initComponents();
         this.serv=serv;
@@ -161,7 +161,7 @@ public class VClave1 extends javax.swing.JDialog {
         if (!jvieja.getText().isEmpty() && !jnueva.getText().isEmpty() ) {
             try {
                 //
-                jAviso.setText(this.serv.cambiarContraseña(u.getNombre(), jvieja.getText(), jnueva.getText()));
+                jAviso.setText(this.serv.cambiarContraseña( u, jvieja.getText(), jnueva.getText()));
             } catch (RemoteException ex) {
                 Logger.getLogger(VClave.class.getName()).log(Level.SEVERE, null, ex);
             }
