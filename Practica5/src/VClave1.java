@@ -163,7 +163,7 @@ public class VClave1 extends javax.swing.JDialog {
                 //
                 jAviso.setText(this.serv.cambiarContraseña( u, jvieja.getText(), jnueva.getText()));
             } catch (RemoteException ex) {
-                Logger.getLogger(VClave.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(VClave1.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         else {

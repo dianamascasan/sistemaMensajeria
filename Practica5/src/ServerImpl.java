@@ -233,9 +233,9 @@ public class ServerImpl extends UnicastRemoteObject
             stmCategorias.setString(2, usuario);
             stmCategorias.setString(3, claveVieja);
             if (stmCategorias.executeUpdate() != 0) {
-                return "Contraseña cambiada correctamente";
+                return "Contraseña cambiada ";
             } else {
-                return "No se pudo cambiar la contraseña";
+                return "Error al cambiar clave";
             }
 
         } catch (SQLException e) {
