@@ -187,7 +187,7 @@ public class VAutentificacion extends javax.swing.JFrame {
             if (nombre != null) {
                 try {
                     System.out.println("Server said " + h.sayHello());
-                    
+
                     chat = new VChat(this, h, nombre, jClave.getText());
                     ClientInterface callbackObj = new ClientImpl(chat);
                     Client2Interface callbackObj2 = new Client2Impl(chat);
@@ -202,8 +202,8 @@ public class VAutentificacion extends javax.swing.JFrame {
                         System.out.println("Unregistered for callback.");
 
                         chat.setVisible(true);
-                    }else{
-                        jAviso.setText(nombre+" ya conectado");
+                    } else {
+                        jAviso.setText(nombre + " ya conectado");
                     }
 
                 } catch (RemoteException ex) {
@@ -224,7 +224,7 @@ public class VAutentificacion extends javax.swing.JFrame {
 
             try {
                 if (!this.h.usuarioYaExiste(jUsuario.getText())) {
-                    
+
                     chat = new VChat(this, this.h, jUsuario.getText(), jClave.getText());
                     this.h.registrarUsuario(jUsuario.getText(), jClave.getText());
                     System.out.println("Server said " + h.sayHello());
@@ -235,7 +235,7 @@ public class VAutentificacion extends javax.swing.JFrame {
                     // register for callback
                     Usuario usuario = new Usuario(jUsuario.getText(), callbackObj, callbackObj2);
 
-                    h.registerForCallback(callbackObj, usuario,  jClave.getText());
+                    h.registerForCallback(callbackObj, usuario, jClave.getText());
                     System.out.println("Registered for callback.");
                     System.out.println("Lookup completed ");
 
@@ -259,13 +259,15 @@ public class VAutentificacion extends javax.swing.JFrame {
     }//GEN-LAST:event_jClaveActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-       if(chat.isVisible()){
-           try {
-               h.unregisterForCallback(nombre, chat.getClave());
-           } catch (RemoteException ex) {
-               Logger.getLogger(VAutentificacion.class.getName()).log(Level.SEVERE, null, ex);
-           }
-       }
+        if (chat != null) {
+            if (chat.isVisible()) {
+                try {
+                    h.unregisterForCallback(nombre, chat.getClave());
+                } catch (RemoteException ex) {
+                    Logger.getLogger(VAutentificacion.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
     }//GEN-LAST:event_formWindowClosing
 
     /**

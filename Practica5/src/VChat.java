@@ -41,6 +41,10 @@ public class VChat extends javax.swing.JDialog {
         this.amigos=new HashMap<>();
         saludoCliente.setText("¡Hola " + nombre.toUpperCase() + "!");
         enviar.setEnabled(false);
+        jemoji1.setEnabled(false);
+            jemoji2.setEnabled(false);
+            jemoji3.setEnabled(false);
+            jemoji4.setEnabled(false);
         
 
     }
@@ -107,11 +111,11 @@ public class VChat extends javax.swing.JDialog {
         jchatear = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jChat = new javax.swing.JTextArea();
-        jButton1 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        jemoji2 = new javax.swing.JButton();
+        jemoji4 = new javax.swing.JButton();
+        jemoji3 = new javax.swing.JButton();
         jnotificacion = new javax.swing.JLabel();
-        jButton5 = new javax.swing.JButton();
+        jemoji1 = new javax.swing.JButton();
         jcambiarClave = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -194,42 +198,42 @@ public class VChat extends javax.swing.JDialog {
         jChat.setRows(5);
         jScrollPane1.setViewportView(jChat);
 
-        jButton1.setBackground(new java.awt.Color(244, 242, 255));
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8-estoy-aquí-48.png"))); // NOI18N
-        jButton1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jemoji2.setBackground(new java.awt.Color(244, 242, 255));
+        jemoji2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8-estoy-aquí-48.png"))); // NOI18N
+        jemoji2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jemoji2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jemoji2ActionPerformed(evt);
             }
         });
 
-        jButton3.setBackground(new java.awt.Color(244, 242, 255));
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8-globos-de-fiesta-48.png"))); // NOI18N
-        jButton3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        jemoji4.setBackground(new java.awt.Color(244, 242, 255));
+        jemoji4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8-globos-de-fiesta-48.png"))); // NOI18N
+        jemoji4.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jemoji4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                jemoji4ActionPerformed(evt);
             }
         });
 
-        jButton4.setBackground(new java.awt.Color(244, 242, 255));
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8-estrellas-fugaces-48.png"))); // NOI18N
-        jButton4.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        jemoji3.setBackground(new java.awt.Color(244, 242, 255));
+        jemoji3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8-estrellas-fugaces-48.png"))); // NOI18N
+        jemoji3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jemoji3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                jemoji3ActionPerformed(evt);
             }
         });
 
         jnotificacion.setFont(new java.awt.Font("OCR A Extended", 0, 18)); // NOI18N
         jnotificacion.setForeground(new java.awt.Color(255, 0, 51));
 
-        jButton5.setBackground(new java.awt.Color(244, 242, 255));
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8-me-gusta-48.png"))); // NOI18N
-        jButton5.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        jemoji1.setBackground(new java.awt.Color(244, 242, 255));
+        jemoji1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons8-me-gusta-48.png"))); // NOI18N
+        jemoji1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jemoji1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                jemoji1ActionPerformed(evt);
             }
         });
 
@@ -256,13 +260,13 @@ public class VChat extends javax.swing.JDialog {
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(14, 14, 14)
-                                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jemoji1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jemoji2, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jemoji3, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(jemoji4, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(40, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -278,10 +282,10 @@ public class VChat extends javax.swing.JDialog {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton3)
-                    .addComponent(jButton1)
-                    .addComponent(jButton4)
-                    .addComponent(jButton5))
+                    .addComponent(jemoji4)
+                    .addComponent(jemoji2)
+                    .addComponent(jemoji3)
+                    .addComponent(jemoji1))
                 .addGap(28, 28, 28)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(enviar)
@@ -408,6 +412,10 @@ public class VChat extends javax.swing.JDialog {
         jchatear.setText("Chatea con " + amigoChat.getNombre().toUpperCase());
         jChat.setText("");
         this.mostrarMensaje(amigoChat.getConversacion(), amigoChat.getNombre());
+        jemoji1.setEnabled(true);
+            jemoji2.setEnabled(true);
+            jemoji3.setEnabled(true);
+            jemoji4.setEnabled(true);
 
     }//GEN-LAST:event_jTablaAmigosMouseClicked
 
@@ -430,7 +438,7 @@ public class VChat extends javax.swing.JDialog {
        
     }//GEN-LAST:event_jcambiarClaveActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jemoji2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jemoji2ActionPerformed
         // TODO add your handling code here:
 
         jChat.append( nombre + ":  " + "👋" + "\n");
@@ -441,9 +449,9 @@ public class VChat extends javax.swing.JDialog {
         } catch (RemoteException ex) {
             Logger.getLogger(VChat.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jemoji2ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void jemoji3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jemoji3ActionPerformed
         // TODO add your handling code here:
 
         jChat.append( nombre + ":  " + "✨" + "\n");
@@ -454,9 +462,9 @@ public class VChat extends javax.swing.JDialog {
         } catch (RemoteException ex) {
             Logger.getLogger(VChat.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_jemoji3ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void jemoji4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jemoji4ActionPerformed
         // TODO add your handling code here:
         jChat.append( nombre + ":  " + "🎉" + "\n");
 
@@ -466,9 +474,9 @@ public class VChat extends javax.swing.JDialog {
         } catch (RemoteException ex) {
             Logger.getLogger(VChat.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_jemoji4ActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void jemoji1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jemoji1ActionPerformed
         // TODO add your handling code here:
          jChat.append( nombre + ":  " + "❤" + "\n");
 
@@ -478,7 +486,7 @@ public class VChat extends javax.swing.JDialog {
         } catch (RemoteException ex) {
             Logger.getLogger(VChat.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_jemoji1ActionPerformed
 
     public void actualizarNuevosChats(Amigo u) throws RemoteException {
         amigos.put(u.getNombre(), u);
@@ -493,7 +501,15 @@ public class VChat extends javax.swing.JDialog {
 
         this.amigos.remove(u);
         ModeloTablaUsuarios chats;
-
+        if(amigoChat.getNombre().equals(u)){
+            amigoChat=null;
+            enviar.setEnabled(false);
+            jemoji1.setEnabled(false);
+            jemoji2.setEnabled(false);
+            jemoji3.setEnabled(false);
+            jemoji4.setEnabled(false);
+            jChat.append("DESCONECTADO");
+        }
         chats = (ModeloTablaUsuarios) jTablaAmigos.getModel();
         chats.borrarTabla();
         
@@ -504,10 +520,6 @@ public class VChat extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton enviar;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JTextArea jChat;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JTextPane jMensajeEnviar;
@@ -519,6 +531,10 @@ public class VChat extends javax.swing.JDialog {
     private javax.swing.JTable jTablaAmigos;
     private javax.swing.JButton jcambiarClave;
     private javax.swing.JLabel jchatear;
+    private javax.swing.JButton jemoji1;
+    private javax.swing.JButton jemoji2;
+    private javax.swing.JButton jemoji3;
+    private javax.swing.JButton jemoji4;
     private javax.swing.JLabel jnotificacion;
     private javax.swing.JLabel saludoCliente;
     private javax.swing.JButton solicitudes;
