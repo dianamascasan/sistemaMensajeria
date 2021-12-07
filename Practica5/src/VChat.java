@@ -20,13 +20,14 @@ public class VChat extends javax.swing.JDialog {
      * Creates new form VChat
      */
     private String nombre;
+    private String clave;
     private HashMap<String, Amigo> amigos;
     private VAutentificacion padre;
     private ServerInterface serv;
     private Amigo amigoChat;
     private VSolicitudes sol;
 
-    public VChat(java.awt.Frame padre, ServerInterface serv, String nombre) {
+    public VChat(java.awt.Frame padre, ServerInterface serv, String nombre, String clave) {
         super(padre);
        
         initComponents();
@@ -34,6 +35,7 @@ public class VChat extends javax.swing.JDialog {
         this.padre = (VAutentificacion) padre;
         this.serv = serv;
         this.nombre=nombre;
+        this.clave=clave;
         this.amigos=new HashMap<>();
         saludoCliente.setText("¡Hola " + nombre.toUpperCase() + "!");
         enviar.setEnabled(false);
@@ -381,7 +383,7 @@ public class VChat extends javax.swing.JDialog {
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         try {
-            this.serv.unregisterForCallback(nombre);
+            this.serv.unregisterForCallback(nombre, this.clave);
             this.dispose();
         } catch (RemoteException ex) {
             Logger.getLogger(VChat.class.getName()).log(Level.SEVERE, null, ex);

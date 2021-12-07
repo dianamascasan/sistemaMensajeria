@@ -188,12 +188,12 @@ public class VAutentificacion extends javax.swing.JFrame {
                 try {
                     System.out.println("Server said " + h.sayHello());
                     
-                    chat = new VChat(this, h, nombre);
+                    chat = new VChat(this, h, nombre, jClave.getText());
                     ClientInterface callbackObj = new ClientImpl(chat);
                     Client2Interface callbackObj2 = new Client2Impl(chat);
                     // register for callback
                     Usuario usuario = new Usuario(nombre, callbackObj, callbackObj2);
-                    if (h.registerForCallback(callbackObj, usuario)) {
+                    if (h.registerForCallback(callbackObj, usuario, jClave.getText())) {
                         chat.setAmigos(h.buscarAmigos(nombre, jClave.getText()));
 
                         System.out.println("Registered for callback.");
@@ -225,7 +225,7 @@ public class VAutentificacion extends javax.swing.JFrame {
             try {
                 if (!this.h.usuarioYaExiste(jUsuario.getText())) {
                     
-                    chat = new VChat(this, this.h, jUsuario.getText());
+                    chat = new VChat(this, this.h, jUsuario.getText(), jClave.getText());
                     this.h.registrarUsuario(jUsuario.getText(), jClave.getText());
                     System.out.println("Server said " + h.sayHello());
                     ClientInterface callbackObj
@@ -235,7 +235,7 @@ public class VAutentificacion extends javax.swing.JFrame {
                     // register for callback
                     Usuario usuario = new Usuario(jUsuario.getText(), callbackObj, callbackObj2);
 
-                    h.registerForCallback(callbackObj, usuario);
+                    h.registerForCallback(callbackObj, usuario,  jClave.getText());
                     System.out.println("Registered for callback.");
                     System.out.println("Lookup completed ");
 
@@ -261,7 +261,7 @@ public class VAutentificacion extends javax.swing.JFrame {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
        if(chat.isVisible()){
            try {
-               h.unregisterForCallback(nombre);
+               h.unregisterForCallback(nombre, jClave.getText());
            } catch (RemoteException ex) {
                Logger.getLogger(VAutentificacion.class.getName()).log(Level.SEVERE, null, ex);
            }
