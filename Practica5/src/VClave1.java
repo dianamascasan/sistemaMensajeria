@@ -8,27 +8,31 @@ import java.util.logging.Logger;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author teres
  */
 public class VClave1 extends javax.swing.JDialog {
 
-     private ServerInterface serv;
+    private ServerInterface serv;
     private String u;
+    private VChat chat;
+
     /**
      * Creates new form VClave1
+     *
      * @param parent
      * @param modal
      * @param u
      * @param serv
+     * @param chat
      */
-    public VClave1(java.awt.Frame parent, boolean modal,String u, ServerInterface serv) {
+    public VClave1(java.awt.Frame parent, boolean modal, String u, ServerInterface serv, VChat chat) {
         super(parent, modal);
         initComponents();
-        this.serv=serv;
-        this.u=u;
+        this.serv = serv;
+        this.u = u;
+        this.chat = chat;
     }
 
     /**
@@ -158,15 +162,18 @@ public class VClave1 extends javax.swing.JDialog {
 
     private void jcambiarClaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcambiarClaveActionPerformed
         // TODO add your handling code here:
-        if (!jvieja.getText().isEmpty() && !jnueva.getText().isEmpty() ) {
+        if (!jvieja.getText().isEmpty() && !jnueva.getText().isEmpty()) {
             try {
-                //
-                jAviso.setText(this.serv.cambiarContraseña( u, jvieja.getText(), jnueva.getText()));
+                if (this.serv.cambiarContraseña(u, jvieja.getText(), jnueva.getText())) {
+                    jAviso.setText("Contraseña cambiada ");
+                    chat.setClave(jnueva.getText());
+                } else {
+                    jAviso.setText("Error al cambiar clave");
+                }
             } catch (RemoteException ex) {
                 Logger.getLogger(VClave1.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
-        else {
+        } else {
             jAviso.setText("Debes cubrir los campos (*)");
         }
 
@@ -183,7 +190,6 @@ public class VClave1 extends javax.swing.JDialog {
     /**
      * @param args the command line arguments
      */
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jAviso;

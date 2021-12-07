@@ -26,7 +26,7 @@ public interface ServerInterface extends Remote {
 // cancel its registration for callback
     public void unregisterForCallback(String u, String clave)
             throws java.rmi.RemoteException;
-        public String cambiarContraseña(String usuario, String claveVieja, String claveNueva) throws java.rmi.RemoteException;
+        public boolean cambiarContraseña(String usuario, String claveVieja, String claveNueva) throws java.rmi.RemoteException;
 
     public String verificarUsuario(String usuario, String clave) throws java.rmi.RemoteException;
 

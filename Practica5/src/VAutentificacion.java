@@ -261,7 +261,7 @@ public class VAutentificacion extends javax.swing.JFrame {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
        if(chat.isVisible()){
            try {
-               h.unregisterForCallback(nombre, jClave.getText());
+               h.unregisterForCallback(nombre, chat.getClave());
            } catch (RemoteException ex) {
                Logger.getLogger(VAutentificacion.class.getName()).log(Level.SEVERE, null, ex);
            }

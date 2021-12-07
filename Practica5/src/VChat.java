@@ -27,6 +27,8 @@ public class VChat extends javax.swing.JDialog {
     private Amigo amigoChat;
     private VSolicitudes sol;
 
+    
+
     public VChat(java.awt.Frame padre, ServerInterface serv, String nombre, String clave) {
         super(padre);
        
@@ -75,7 +77,14 @@ public class VChat extends javax.swing.JDialog {
         }
         comprobarNotificaciones(nombre);
     }
+    public void setClave(String clave) {
+        this.clave = clave;
+    }
 
+    public String getClave() {
+        return clave;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -416,7 +425,7 @@ public class VChat extends javax.swing.JDialog {
     }//GEN-LAST:event_jMensajeEnviarKeyReleased
 
     private void jcambiarClaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcambiarClaveActionPerformed
-       VClave1 clave1 = new VClave1(this.padre,true, nombre, serv);
+       VClave1 clave1 = new VClave1(this.padre,true, nombre, serv,this);
        clave1.setVisible(true);
        
     }//GEN-LAST:event_jcambiarClaveActionPerformed

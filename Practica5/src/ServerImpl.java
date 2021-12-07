@@ -187,7 +187,7 @@ public class ServerImpl extends UnicastRemoteObject
     }
 
     @Override
-    public String cambiarContraseña(String usuario, String claveVieja, String claveNueva) {
+    public boolean cambiarContraseña(String usuario, String claveVieja, String claveNueva) {
         PreparedStatement stmCategorias = null;
         try {
             stmCategorias = conexion.prepareStatement("update usuario set clave=? where nombre=? and clave=crypt(?,clave)");
@@ -195,9 +195,9 @@ public class ServerImpl extends UnicastRemoteObject
             stmCategorias.setString(2, usuario);
             stmCategorias.setString(3, claveVieja);
             if (stmCategorias.executeUpdate() != 0) {
-                return "Contraseña cambiada ";
+                return true;
             } else {
-                return "Error al cambiar clave";
+                return false;
             }
 
         } catch (SQLException e) {
@@ -210,7 +210,7 @@ public class ServerImpl extends UnicastRemoteObject
             }
 
         }
-        return null;
+        return false;
 
     }
 
