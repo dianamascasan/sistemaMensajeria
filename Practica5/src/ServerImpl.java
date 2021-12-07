@@ -49,12 +49,12 @@ public class ServerImpl extends UnicastRemoteObject
 //            System.out.println("Registered new client ");
 //
 //        }
-        if(!this.usuariosConectados.keySet().contains(u.getNombre())){
+        if (!this.usuariosConectados.keySet().contains(u.getNombre())) {
             this.usuariosConectados.put(u.getNombre(), u);
             return true;
-        }return false;
-        
-        
+        }
+        return false;
+
     }
 
 // This remote method allows an object client to 
@@ -72,6 +72,7 @@ public class ServerImpl extends UnicastRemoteObject
 //        }
         desconectado(nombre);
         this.usuariosConectados.remove(nombre);
+        System.out.println("Unregistered client " + nombre);
     }
 
     private synchronized void conectado(Usuario u) throws java.rmi.RemoteException {
@@ -81,7 +82,8 @@ public class ServerImpl extends UnicastRemoteObject
                 + "Callbacks initiated ---");
         for (Usuario us : u.getAmigos().values()) {
             System.out.println(us.getNombre());
-            us.getInterfaz().nuevoChat(new Amigo(usuariosConectados.get(u.getNombre()).getInterfaz2(),u.getNombre()));
+            us.setAmigos(u);
+            us.getInterfaz().nuevoChat(new Amigo(usuariosConectados.get(u.getNombre()).getInterfaz2(), u.getNombre()));
         }
 
         // end for
@@ -96,9 +98,10 @@ public class ServerImpl extends UnicastRemoteObject
                 + "Callbacks initiated ---");
         for (Usuario us : usuariosConectados.values()) {
             if (us.getNombre().equals(usuarioAmigo)) {
-                us.getInterfaz().nuevoChat(new Amigo(usuariosConectados.get(usuario).getInterfaz2(),usuario));
-                usuariosConectados.get(usuario).getInterfaz().nuevoChat(new Amigo(usuariosConectados.get(usuarioAmigo).getInterfaz2(),usuarioAmigo));
-
+                us.getInterfaz().nuevoChat(new Amigo(usuariosConectados.get(usuario).getInterfaz2(), usuario));
+                usuariosConectados.get(usuario).getInterfaz().nuevoChat(new Amigo(usuariosConectados.get(usuarioAmigo).getInterfaz2(), usuarioAmigo));
+                us.setAmigos(usuariosConectados.get(usuario));
+                usuariosConectados.get(usuario).setAmigos(us);
             }
         }
 //        for (Usuario us : usuariosConectados.values()) {
@@ -137,8 +140,10 @@ public class ServerImpl extends UnicastRemoteObject
         System.out.println(
                 "**************************************\n"
                 + "Callbacks initiated ---");
-        for (Usuario us : this.usuariosConectados.get(u).getAmigos().values()) {
-            us.getInterfaz().borrarChat(u);
+        for (String us : this.usuariosConectados.get(u).getAmigos().keySet()) {
+            usuariosConectados.get(us).getInterfaz().borrarChat(u);
+            usuariosConectados.get(us).borrarAmigos(usuariosConectados.get(u));
+
         }
         System.out.println("********************************\n"
                 + "Server completed callbacks ---");

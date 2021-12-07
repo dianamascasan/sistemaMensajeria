@@ -19,7 +19,9 @@ public class VAutentificacion extends javax.swing.JFrame {
 
     private String IP;
     private Integer portNum;
+    private VChat chat;
     private ServerInterface h;
+    private String nombre;
 
     /**
      * Creates new form VAutentificacion
@@ -58,6 +60,11 @@ public class VAutentificacion extends javax.swing.JFrame {
         jAviso = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(244, 242, 255));
 
@@ -170,7 +177,7 @@ public class VAutentificacion extends javax.swing.JFrame {
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
         if (!jUsuario.getText().isEmpty() && !jClave.getText().isEmpty()) {
-            String nombre = null;
+            nombre = null;
             try {
                 nombre = this.h.verificarUsuario(jUsuario.getText(), jClave.getText());
             } catch (RemoteException ex) {
@@ -180,7 +187,7 @@ public class VAutentificacion extends javax.swing.JFrame {
             if (nombre != null) {
                 try {
                     System.out.println("Server said " + h.sayHello());
-                    VChat chat;
+                    
                     chat = new VChat(this, h, nombre);
                     ClientInterface callbackObj = new ClientImpl(chat);
                     Client2Interface callbackObj2 = new Client2Impl(chat);
@@ -217,7 +224,7 @@ public class VAutentificacion extends javax.swing.JFrame {
 
             try {
                 if (!this.h.usuarioYaExiste(jUsuario.getText())) {
-                    VChat chat;
+                    
                     chat = new VChat(this, this.h, jUsuario.getText());
                     this.h.registrarUsuario(jUsuario.getText(), jClave.getText());
                     System.out.println("Server said " + h.sayHello());
@@ -250,6 +257,16 @@ public class VAutentificacion extends javax.swing.JFrame {
     private void jClaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jClaveActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jClaveActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+       if(chat.isVisible()){
+           try {
+               h.unregisterForCallback(nombre);
+           } catch (RemoteException ex) {
+               Logger.getLogger(VAutentificacion.class.getName()).log(Level.SEVERE, null, ex);
+           }
+       }
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
