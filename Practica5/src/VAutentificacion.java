@@ -193,7 +193,7 @@ public class VAutentificacion extends javax.swing.JFrame {
                     Client2Interface callbackObj2 = new Client2Impl(chat);
                     // register for callback
                     Usuario usuario = new Usuario(nombre, callbackObj, callbackObj2);
-                    if (h.registerForCallback(callbackObj, usuario, jClave.getText())) {
+                    if (h.registerForCallback(usuario, jClave.getText())) {
                         chat.setAmigos(h.buscarAmigos(nombre, jClave.getText()));
 
                         System.out.println("Registered for callback.");
@@ -235,7 +235,7 @@ public class VAutentificacion extends javax.swing.JFrame {
                     // register for callback
                     Usuario usuario = new Usuario(jUsuario.getText(), callbackObj, callbackObj2);
 
-                    h.registerForCallback(callbackObj, usuario, jClave.getText());
+                    h.registerForCallback(usuario, jClave.getText());
                     System.out.println("Registered for callback.");
                     System.out.println("Lookup completed ");
 

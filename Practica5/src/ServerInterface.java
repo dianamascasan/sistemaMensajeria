@@ -18,8 +18,7 @@ public interface ServerInterface extends Remote {
 // @param callbackClientObject is a reference to the
 //        object of the client; to be used by the server
 //        to make its callbacks.
-    public boolean registerForCallback(
-            ClientInterface callbackClientObject, Usuario u, String clave
+    public boolean registerForCallback( Usuario u, String clave
     ) throws java.rmi.RemoteException;
 
 // This remote method allows an object client to 

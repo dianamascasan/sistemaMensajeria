@@ -22,7 +22,7 @@ import java.util.logging.Logger;
 public class ServerImpl extends UnicastRemoteObject
         implements ServerInterface {
 
-    //private Vector clientList;
+    
     private java.sql.Connection conexion;
     private HashMap<String, Usuario> usuariosConectados;
 
@@ -40,7 +40,7 @@ public class ServerImpl extends UnicastRemoteObject
     }
 
     @Override
-    public synchronized boolean registerForCallback(ClientInterface callbackClientObject, Usuario u, String clave) throws java.rmi.RemoteException {
+    public synchronized boolean registerForCallback(Usuario u, String clave) throws java.rmi.RemoteException {
         if (this.verificarUsuario(u.getNombre(), clave) != null) {
             if (!this.usuariosConectados.keySet().contains(u.getNombre())) {
                 this.usuariosConectados.put(u.getNombre(), u);
