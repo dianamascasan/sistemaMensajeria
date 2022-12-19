@@ -1,4 +1,5 @@
-### About
+## About
+#### Proyecto realizado por Teresa Gutiérrez Blanco y Diana Mascareñas Sande
 Implementación de un sistema de mensajería instantánea en P2P a través de Java RMI.
 La aplicación cuenta con un servidor central al que se conectarán los clientes para conocer qué clientes "amigos" están conectados. De la misma manera, dichos "amigos" serán notificados de la nueva conexión. En el momento de desconexión de un cliente, todos sus clientes "amigos" serán notificados.
 Aunque esta información de clientes conectados será obtenida a través del servidor, la comunicación en los clientes será en modo P2P, es decir, será directa entre cliente y cliente, no pasará por el servidor.
